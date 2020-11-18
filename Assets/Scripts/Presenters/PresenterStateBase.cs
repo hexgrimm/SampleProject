@@ -5,7 +5,7 @@ namespace Presenters
 	public abstract class PresenterStateBase
 	{
 		public Action<PresenterStateBase> SetNewState;
-		public IPresenterStateFactory Factory;
+		public IPresenterStateFactory StateFactory;
 		public abstract void OnEnter();
 		public abstract void OnExit();
 

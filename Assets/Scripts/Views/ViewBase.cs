@@ -23,7 +23,6 @@ namespace Views
 
 		public virtual void Hide()
 		{
-			PrefabLink = null;
 			GameObject.Destroy(_go);
 		}
 	}

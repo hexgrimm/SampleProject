@@ -31,7 +31,7 @@ namespace Root
 			var appInitModel = new AppInitModel(timeModel);
 			var playerBalanceModel = new PlayerBalanceModel(timeModel);
 			
-			var presenterStateFactory = new PresenterStateFactory(loadingWindowView, appInitModel, lobbyView, playerBalanceModel);
+			var presenterStateFactory = new PresenterStateFactory(loadingWindowView, appInitModel, lobbyView, playerBalanceModel, timeModel);
 			
 			var rootModel = new RootModel(appInitModel, timeModel, playerBalanceModel);
 			var presenter = new RootPresenter(rootModel, presenterStateFactory, this);

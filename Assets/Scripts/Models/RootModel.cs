@@ -4,9 +4,9 @@ namespace Models
 	{
 		private readonly IUpdateableModel _appInitModel;
 		private readonly IUpdateableModel _timeModel;
-		private readonly IPlayerBalanceModel _playerBalanceModel;
+		private readonly IUpdateableModel _playerBalanceModel;
 
-		public RootModel(IUpdateableModel appInitModel, IUpdateableModel timeModel, IPlayerBalanceModel playerBalanceModel)
+		public RootModel(IUpdateableModel appInitModel, IUpdateableModel timeModel, IUpdateableModel playerBalanceModel)
 		{
 			_appInitModel = appInitModel;
 			_timeModel = timeModel;
@@ -18,6 +18,7 @@ namespace Models
 			//control of update order between models to evade skipping frames
 			_timeModel.Update();
 			_appInitModel.Update();
+			_playerBalanceModel.Update();
 		}
 	}
 }

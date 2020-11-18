@@ -1,4 +1,5 @@
 using Models;
+using UnityEngine;
 using Views;
 
 namespace Presenters
@@ -28,9 +29,10 @@ namespace Presenters
 
 		private void SetNewState(PresenterStateBase newState)
 		{
+			Debug.Log("presenter state changed to : " + newState.GetType().Name);
 			_currentState?.OnExit();
 			newState.SetNewState = SetNewState;
-			newState.Factory = _stateFactory;
+			newState.StateFactory = _stateFactory;
 			_currentState = newState;
 			_currentState.OnEnter();
 		}

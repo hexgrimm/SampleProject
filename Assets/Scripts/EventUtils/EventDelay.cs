@@ -12,7 +12,7 @@ namespace EventUtils
 			_action = action;
 		}
 
-		public void DirectMethod()
+		public void DirectCallMethod()
 		{
 			_eventRaised = true;
 		}
@@ -24,6 +24,11 @@ namespace EventUtils
 				_eventRaised = false;
 				_action?.Invoke();
 			}
+		}
+
+		public void ClearCalls()
+		{
+			_eventRaised = false;
 		}
 	}
 }

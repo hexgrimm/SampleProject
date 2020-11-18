@@ -26,6 +26,11 @@ namespace Views
 		{
 			PrefabLink.Coins.text = value.ToString();
 		}
+		
+		public void SetDeltaTimeValue(float value)
+		{
+			PrefabLink.DeltaTime.text = value.ToString("0.00000");
+		}
 
 		public override void Hide()
 		{

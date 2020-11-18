@@ -6,5 +6,6 @@ namespace Views
 	{
 		void SubscribeToRequestButton(Action action);
 		void SetCoinsValue(int value);
+		void SetDeltaTimeValue(float value);
 	}
 }
