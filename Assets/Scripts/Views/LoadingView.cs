@@ -1,5 +1,3 @@
-using System;
-using Root;
 using UnityEngine;
 
 namespace Views
@@ -7,20 +5,20 @@ namespace Views
 	public class LoadingView : ViewBase<LoadingViewPrefabLinks>, ILoadingWindowView
 	{
 		private readonly IUpdater _updater;
-		private bool isRotating;
+		private bool _isRotating;
 		
 		public LoadingView(GameObject prefab, Transform parent, IUpdater updater) : base(prefab, parent)
 		{
 			_updater = updater;
 		}
 
-		public void RotateSpinner()
+		public void EnableSpinnerRotation()
 		{
 			//better use dotween or start animation. I injected updater just as shortcut
 
-			if (!isRotating)
+			if (!_isRotating)
 			{
-				isRotating = true;
+				_isRotating = true;
 				_updater.UpdateEvent += RotateSpinnerMethod;
 			}
 		}
@@ -32,10 +30,10 @@ namespace Views
 
 		public override void Hide()
 		{
-			if (isRotating)
+			if (_isRotating)
 			{
 				_updater.UpdateEvent -= RotateSpinnerMethod;
-				isRotating = false;
+				_isRotating = false;
 			}
 			
 			base.Hide();

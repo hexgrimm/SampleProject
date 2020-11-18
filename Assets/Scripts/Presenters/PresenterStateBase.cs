@@ -1,11 +1,22 @@
-using GenericStates;
+using System;
 
 namespace Presenters
 {
-	public abstract class PresenterStateBase : State<PresenterStateBase>
+	public abstract class PresenterStateBase
 	{
-		public RootPresenter Context;
+		public Action<PresenterStateBase> SetNewState;
+		public IPresenterStateFactory Factory;
 		public abstract void OnEnter();
 		public abstract void OnExit();
+
+		public virtual void PreModelUpdate()
+		{
+			
+		}
+
+		public virtual void PostModelUpdate()
+		{
+			
+		}
 	}
 }

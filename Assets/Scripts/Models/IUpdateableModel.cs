@@ -1,4 +1,4 @@
-namespace Presenters
+namespace Models
 {
 	public interface IUpdateableModel
 	{

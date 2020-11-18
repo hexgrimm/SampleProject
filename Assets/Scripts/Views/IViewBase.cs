@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace Views
 {
 	public interface IViewBase

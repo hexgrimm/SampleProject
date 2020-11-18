@@ -17,7 +17,7 @@ namespace Views
 
 		public virtual void Show()
 		{
-			_go = GameObject.Instantiate(_prefab, _parent);
+			_go = Object.Instantiate(_prefab, _parent);
 			PrefabLink = _go.GetComponent<T>();
 		}
 

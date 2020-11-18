@@ -1,3 +1,5 @@
+using EventUtils;
+using Models;
 using Views;
 
 namespace Presenters
@@ -6,7 +8,10 @@ namespace Presenters
 	{
 		private readonly ILoadingWindowView _loadingWindowView;
 		private readonly IAppInitModel _appInitModel;
+		private readonly IPresenterStateFactory _stateFactory;
 
+		private EventDelay _loadCompleteEvent = new EventDelay(); 
+		
 		public LoadingPresenter(ILoadingWindowView loadingWindowView, IAppInitModel appInitModel)
 		{
 			_loadingWindowView = loadingWindowView;
@@ -16,12 +21,20 @@ namespace Presenters
 		public override void OnEnter()
 		{
 			_loadingWindowView.Show();
-			_loadingWindowView.RotateSpinner();
+			_loadingWindowView.EnableSpinnerRotation();
+			_appInitModel.AllPluginsInitialized += _loadCompleteEvent.DirectMethod;
+			_loadCompleteEvent.SetCallback(OnModelLoadComplete);
 		}
-
+		
 		public override void OnExit()
 		{
 			_loadingWindowView.Hide();
+			_appInitModel.AllPluginsInitialized -= _loadCompleteEvent.DirectMethod;
+		}
+
+		private void OnModelLoadComplete()
+		{
+			SetNewState(_stateFactory.CreateLobbyState());
 		}
 	}
 }

@@ -1,6 +1,6 @@
 using System;
 
-namespace Root
+namespace Views
 {
 	public interface IUpdater
 	{

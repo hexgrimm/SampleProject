@@ -1,6 +1,6 @@
 using System;
 
-namespace Presenters
+namespace Models
 {
 	//example with event
 	public interface IAppInitModel

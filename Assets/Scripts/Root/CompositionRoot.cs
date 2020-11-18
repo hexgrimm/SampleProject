@@ -12,6 +12,7 @@ namespace Root
 		
 		//just for example. This can be injected as resource database or smth to views directly.
 		public GameObject LoadingPrefab;
+		public GameObject LobbyPrefab;
 		public Transform UiRoot;
 
 		void Start()
@@ -23,21 +24,22 @@ namespace Root
 		{
 			//all this can be done by DI container. Or not. I wrote it without once, worked fine too.
 			
-			ILoadingWindowView loadingWindowView = new LoadingView(LoadingPrefab, UiRoot, this);
-
+			var loadingWindowView = new LoadingView(LoadingPrefab, UiRoot, this);
+			var lobbyView = new LobbyView(LobbyPrefab, UiRoot);
+			
 			var timeModel = new TimeModel();
 			var appInitModel = new AppInitModel(timeModel);
+			var playerBalanceModel = new PlayerBalanceModel(timeModel);
 			
-			var presenterStateFactory = new PresenterStateFactory(loadingWindowView, appInitModel);
+			var presenterStateFactory = new PresenterStateFactory(loadingWindowView, appInitModel, lobbyView, playerBalanceModel);
 			
-			var rootModel = new RootModel(appInitModel, timeModel);
-			var presenter = new RootPresenter(rootModel, presenterStateFactory);
+			var rootModel = new RootModel(appInitModel, timeModel, playerBalanceModel);
+			var presenter = new RootPresenter(rootModel, presenterStateFactory, this);
 		}
 
 		private void Update()
 		{
 			UpdateEvent();
 		}
-
 	}
 }
