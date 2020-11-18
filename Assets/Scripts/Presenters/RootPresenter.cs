@@ -1,29 +1,28 @@
 using Models;
-using Views;
 
 namespace Presenters
 {	//General orchestrator of an application execution flow. Fully non-Unity
-	public class ApplicationPresenter
+	public class RootPresenter
 	{
-		protected readonly IApplicationModel AppModel;
-		protected readonly IApplicationView AppView;
-
+		private readonly IRootModel _rootModel;
+		
 		private PresenterStateBase _currentState;
 		
-		public ApplicationPresenter(IApplicationModel appModel, IApplicationView appView)
+		public RootPresenter(IRootModel rootModel, IPresenterStateFactory stateFactory)
 		{
-			AppModel = appModel;
-			AppView = appView;
+			_rootModel = rootModel;
+			SetNewState(stateFactory.CreateLoadingState());
 		}
 		
 		public void Update()
 		{
-			AppModel.Update();
+			_rootModel.Update();
 		}
 
 		private void SetNewState(PresenterStateBase newState)
 		{
 			_currentState?.OnExit();
+			newState.Context = this;
 			_currentState = newState;
 			_currentState.OnEnter();
 		}

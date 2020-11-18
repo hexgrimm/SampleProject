@@ -4,7 +4,7 @@ namespace Root
 {
 	public interface IUpdater
 	{
-		event Action Update;
+		event Action UpdateEvent;
 		//OnAppPause and etc...
 	}
 }
