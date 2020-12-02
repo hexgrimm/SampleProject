@@ -29,7 +29,7 @@ namespace Root
 			
 			var timeModel = new TimeModel();
 			var appInitModel = new AppInitModel(timeModel);
-			var playerBalanceModel = new PlayerBalanceModel(timeModel);
+			var playerBalanceModel = new MetaModel(timeModel);
 			
 			var presenterStateFactory = new PresenterStateFactory(loadingWindowView, appInitModel, lobbyView, playerBalanceModel, timeModel);
 			

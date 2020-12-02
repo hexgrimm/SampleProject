@@ -12,12 +12,12 @@ namespace EventUtils
 			_action = action;
 		}
 
-		public void DirectCallMethod()
+		public void MethodForDirectSubscribing()
 		{
 			_eventRaised = true;
 		}
 
-		public void ProceedReactionIfNeeded()
+		public void PollChanges()
 		{
 			if (_eventRaised)
 			{

@@ -9,16 +9,16 @@ namespace Root
 		private readonly ILoadingWindowView _loadingWindowView;
 		private readonly IAppInitModel _appInitModel;
 		private readonly ILobbyView _lobbyView;
-		private readonly IPlayerBalanceModel _playerBalanceModel;
+		private readonly IMetaModel _metaModel;
 		private readonly ITimeModel _timeModel;
 
 		public PresenterStateFactory(ILoadingWindowView loadingWindowView, IAppInitModel appInitModel, 
-			ILobbyView lobbyView, IPlayerBalanceModel playerBalanceModel, ITimeModel timeModel)
+			ILobbyView lobbyView, IMetaModel metaModel, ITimeModel timeModel)
 		{
 			_loadingWindowView = loadingWindowView;
 			_appInitModel = appInitModel;
 			_lobbyView = lobbyView;
-			_playerBalanceModel = playerBalanceModel;
+			_metaModel = metaModel;
 			_timeModel = timeModel;
 		}
 		
@@ -29,7 +29,7 @@ namespace Root
 
 		public PresenterStateBase CreateLobbyState()
 		{
-			return new LobbyPresenter(_lobbyView, _playerBalanceModel, _timeModel);
+			return new LobbyPresenter(_lobbyView, _metaModel, _timeModel);
 		}
 	}
 }
