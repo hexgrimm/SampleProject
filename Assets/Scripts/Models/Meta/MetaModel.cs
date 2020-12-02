@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
+using EventUtils;
 
-namespace Models
+namespace Models.Meta
 {
 	public class MetaModel : IMetaModel, IUpdateableModel
 	{
 		private const float NetworkDelay = 0.42f;
 		private readonly ITimeModel _timeModel;
+		private readonly IMetaConnectionModel _metaConnectionModel;
 
 		public int Coins { get; private set; } = 100;
 		
@@ -17,9 +19,10 @@ namespace Models
 		private readonly List<(float requestTime, Promise promise, Action action)> _requests = 
 			new List<(float requestTime, Promise promise, Action action)>();
 		
-		public MetaModel(ITimeModel timeModel)
+		public MetaModel(ITimeModel timeModel, IMetaConnectionModel metaConnectionModel)
 		{
 			_timeModel = timeModel;
+			_metaConnectionModel = metaConnectionModel;
 		}
 		
 		public IPromise RequestMoreCoins()
@@ -28,8 +31,15 @@ namespace Models
 			
 			_requests.Add((_timeModel.RealTimeSinceStartup, promise, () =>
 			{
-				AddCoins();
-				promise.Complete();
+				if (IsConnected)
+				{
+					AddCoins();
+					promise.SetComplete();
+				}
+				else
+				{
+					promise.SetFailed();
+				}
 			}));
 			return promise;
 		}
@@ -37,12 +47,25 @@ namespace Models
 		public IPromise ExchangeCoinsToCrystals(int coinsAmount)
 		{
 			var promise = new Promise();
-			_requests.Add((_timeModel.RealTimeSinceStartup, promise, () => { ExchangeCoins(coinsAmount, promise); }));
+			_requests.Add((_timeModel.RealTimeSinceStartup, promise, () =>
+			{
+				if (IsConnected)
+				{
+					ExchangeCoins(coinsAmount, promise);
+					promise.SetComplete();
+				}
+				else
+				{
+					promise.SetFailed();
+				}
+			}));
 			return promise;
 		}
 
 		public void Update()
 		{
+			IsConnected = _metaConnectionModel.IsConnected;
+			
 			for (int i = _requests.Count - 1; i >= 0; i--)
 			{
 				var item = _requests[i];
@@ -56,16 +79,15 @@ namespace Models
 
 		private void ExchangeCoins(int coinsAmount, IPromise promise)
 		{
-			
 			if (Coins >= coinsAmount)
 			{
 				Coins -= coinsAmount;
 				Crystals += coinsAmount;
-				promise.Complete();
+				promise.SetComplete();
 			}
 			else
 			{
-				promise.Complete(false);
+				promise.SetFailed();
 			}
 		}
 

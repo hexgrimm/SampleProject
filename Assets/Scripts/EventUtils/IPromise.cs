@@ -1,10 +1,11 @@
-namespace Models
+namespace EventUtils
 {
 	public interface IPromise
 	{
 		bool IsCompleted { get; }
 		bool IsFaulted { get; }
 
-		void Complete(bool withNoError = true);
+		void SetComplete();
+		void SetFailed();
 	}
 }

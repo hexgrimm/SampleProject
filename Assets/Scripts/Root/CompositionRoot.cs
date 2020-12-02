@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using Models;
+using Models.Meta;
 using Presenters;
 using UnityEngine;
 using Views;
@@ -22,19 +24,25 @@ namespace Root
 
 		private void BuildCodeTree()
 		{
-			//all this can be done by DI container. Or not. I wrote it without once, worked fine too.
+			List<IUpdateableModel> models = new List<IUpdateableModel>();
 			
 			var loadingWindowView = new LoadingView(LoadingPrefab, UiRoot, this);
 			var lobbyView = new LobbyView(LobbyPrefab, UiRoot);
 			
 			var timeModel = new TimeModel();
 			var appInitModel = new AppInitModel(timeModel);
-			var playerBalanceModel = new MetaModel(timeModel);
+			var metaConnectionModel = new MetaConnectionModel(timeModel, 2);
+			var playerBalanceModel = new MetaModel(timeModel, metaConnectionModel);
 			
 			var presenterStateFactory = new PresenterStateFactory(loadingWindowView, appInitModel, lobbyView, playerBalanceModel, timeModel);
 			
-			var rootModel = new RootModel(appInitModel, timeModel, playerBalanceModel);
-			var presenter = new RootPresenter(rootModel, presenterStateFactory, this);
+			models.Add(timeModel);
+			models.Add(appInitModel);
+			models.Add(metaConnectionModel);
+			models.Add(playerBalanceModel);
+			
+			var modelUpdaterInOrder = new ModelUpdaterInOrder(models);
+			var presenter = new RootPresenter(modelUpdaterInOrder, presenterStateFactory, this);
 		}
 
 		private void Update()
