@@ -77,7 +77,7 @@ namespace Models.Meta
 			}
 		}
 
-		private void ExchangeCoins(int coinsAmount, IPromise promise)
+		private void ExchangeCoins(int coinsAmount, Promise promise)
 		{
 			if (Coins >= coinsAmount)
 			{

@@ -4,8 +4,5 @@ namespace EventUtils
 	{
 		bool IsCompleted { get; }
 		bool IsFaulted { get; }
-
-		void SetComplete();
-		void SetFailed();
 	}
 }
