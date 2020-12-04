@@ -1,6 +1,6 @@
 namespace Models.Meta
 {
-	public interface IMetaConnectionModel
+	public interface IMetaService
 	{
 		bool IsConnected { get; }
 	}

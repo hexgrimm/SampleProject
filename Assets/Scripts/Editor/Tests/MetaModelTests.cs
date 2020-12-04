@@ -9,7 +9,7 @@ namespace Editor.Tests
 	public class MetaModelTests
 	{
 		private ITimeModel _timeModel;
-		private IMetaConnectionModel _connectionModel;
+		private IMetaService _service;
 		private MetaModel _testModel;
 		
 		[SetUp]
@@ -18,10 +18,10 @@ namespace Editor.Tests
 			_timeModel = Substitute.For<ITimeModel>();
 			_timeModel.RealTimeSinceStartup.ReturnsForAnyArgs(0);
 			
-			_connectionModel = Substitute.For<IMetaConnectionModel>();
-			_connectionModel.IsConnected.ReturnsForAnyArgs(true);
+			_service = Substitute.For<IMetaService>();
+			_service.IsConnected.ReturnsForAnyArgs(true);
 			
-			_testModel = new MetaModel(_timeModel, _connectionModel);
+			_testModel = new MetaModel(_timeModel, _service);
 		}
 		
 		[Test]
@@ -71,7 +71,7 @@ namespace Editor.Tests
 		{
 			var initialCoins = _testModel.Coins;
 
-			_connectionModel.IsConnected.ReturnsForAnyArgs(false);
+			_service.IsConnected.ReturnsForAnyArgs(false);
 			
 			var promise = _testModel.ExchangeCoinsToCrystals(10);
 			

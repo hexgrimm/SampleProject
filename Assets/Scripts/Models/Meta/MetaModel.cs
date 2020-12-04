@@ -8,7 +8,7 @@ namespace Models.Meta
 	{
 		private const float NetworkDelay = 0.42f;
 		private readonly ITimeModel _timeModel;
-		private readonly IMetaConnectionModel _metaConnectionModel;
+		private readonly IMetaService _metaService;
 
 		public int Coins { get; private set; } = 100;
 		
@@ -19,10 +19,10 @@ namespace Models.Meta
 		private readonly List<(float requestTime, Promise promise, Action action)> _requests = 
 			new List<(float requestTime, Promise promise, Action action)>();
 		
-		public MetaModel(ITimeModel timeModel, IMetaConnectionModel metaConnectionModel)
+		public MetaModel(ITimeModel timeModel, IMetaService metaService)
 		{
 			_timeModel = timeModel;
-			_metaConnectionModel = metaConnectionModel;
+			_metaService = metaService;
 		}
 		
 		public IPromise RequestMoreCoins()
@@ -64,7 +64,7 @@ namespace Models.Meta
 
 		public void Update()
 		{
-			IsConnected = _metaConnectionModel.IsConnected;
+			IsConnected = _metaService.IsConnected;
 			
 			for (int i = _requests.Count - 1; i >= 0; i--)
 			{

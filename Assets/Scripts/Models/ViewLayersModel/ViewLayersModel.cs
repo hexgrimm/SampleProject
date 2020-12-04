@@ -12,10 +12,9 @@ namespace Models.ViewLayersModel
 	{
 		event Action LayersChanged;
 		IReadOnlyCollection<(int layerIndex, int viewId)> Layers { get; }
-
+		
 		void ShowViewOnTop(int viewId);
 		void HideView(int viewId);
-		void SetLayerForView(int layer, int viewId);
 		void HideAll();
 	}
 }

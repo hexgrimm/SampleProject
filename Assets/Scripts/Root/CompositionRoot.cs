@@ -31,15 +31,15 @@ namespace Root
 			
 			var timeModel = new TimeModel();
 			var appInitModel = new AppInitModel(timeModel);
-			var metaConnectionModel = new MetaConnectionModel(timeModel, 2);
-			var playerBalanceModel = new MetaModel(timeModel, metaConnectionModel);
+			var metaService = new MetaService(timeModel, 2);
+			var metaModel = new MetaModel(timeModel, metaService);
 			
-			var presenterStateFactory = new PresenterStateFactory(loadingWindowView, appInitModel, lobbyView, playerBalanceModel, timeModel);
+			var presenterStateFactory = new PresenterStateFactory(loadingWindowView, appInitModel, lobbyView, metaModel, timeModel);
 			
 			models.Add(timeModel);
 			models.Add(appInitModel);
-			models.Add(metaConnectionModel);
-			models.Add(playerBalanceModel);
+			models.Add(metaService);
+			models.Add(metaModel);
 			
 			var modelUpdaterInOrder = new ModelUpdaterInOrder(models);
 			var presenter = new RootPresenter(modelUpdaterInOrder, presenterStateFactory, this);
