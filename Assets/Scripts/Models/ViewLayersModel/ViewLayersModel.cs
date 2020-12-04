@@ -1,20 +1,51 @@
-using System;
 using System.Collections.Generic;
+using EventUtils;
 
 namespace Models.ViewLayersModel
 {
-	public class ViewLayersModel
+	public class ViewLayersModel : IViewLayersModel
 	{
-		
-	}
-	
-	public interface IViewLayersModel
-	{
-		event Action LayersChanged;
-		IReadOnlyCollection<(int layerIndex, int viewId)> Layers { get; }
-		
-		void ShowViewOnTop(int viewId);
-		void HideView(int viewId);
-		void HideAll();
+		private readonly List<int> _layers = new List<int>();
+		private readonly Signal _layersChanged = new Signal();
+
+		public ISignal LayersChanged => _layersChanged;
+
+		public IReadOnlyList<int> Layers => _layers;
+
+		public void ShowViewOnTop(int viewId)
+		{
+			for (int i = 0; i < _layers.Count; i++)
+			{
+				var item = _layers[i];
+				if (item == viewId)
+				{
+					_layers.RemoveAt(i);
+					break;
+				}
+			}
+			
+			_layers.Add(viewId);
+			_layersChanged.Raise();
+		}
+
+		public void HideView(int viewId)
+		{
+			for (int i = 0; i < _layers.Count; i++)
+			{
+				var item = _layers[i];
+				if (item == viewId)
+				{
+					_layers.RemoveAt(i);
+					_layersChanged.Raise();
+					break;
+				}
+			}
+		}
+
+		public void HideAll()
+		{
+			_layers.Clear();
+			_layersChanged.Raise();
+		}
 	}
 }

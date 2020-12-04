@@ -1,9 +1,11 @@
+using System.Collections.Generic;
+using EventUtils;
 using Models.ViewLayersModel;
 
 namespace Models.ApplicationViewModel
 {
 	//TODO: convert it into a context for state pattern
-	public class ApplicationViewModel : IUpdateableModel
+	public class RootViewModel : IUpdateableModel, IApplicationViewModel
 	{
 		private readonly IMetaModel _metaModel;
 		private readonly ITimeModel _timeModel;
@@ -11,19 +13,31 @@ namespace Models.ApplicationViewModel
 		
 		private bool _isInitialized = false;
 		private bool _discPopupShown;
-
-		public ApplicationViewStates CurrentState { get; private set; }
+		
+		private ApplicationViewStates _currentState;
+		
+		private readonly Signal _requestMoreCoins = new Signal();
+		private readonly Signal<int> _exchangeCoinsToCrystals = new Signal<int>();
 
 		public int Coins => _metaModel.Coins;
 
 		public int Crystals => _metaModel.Crystals;
+		public float DeltaTime => _timeModel.DeltaTime;
 
-		public ApplicationViewModel(IMetaModel metaModel, ITimeModel timeModel, IViewLayersModel viewLayersModel)
+		public ISignalSource RequestMoreCoins => _requestMoreCoins;
+
+		public ISignalSource<int> ExchangeCoinsToCrystals => _exchangeCoinsToCrystals;
+
+		public ISignal LayersChanged => _viewLayersModel.LayersChanged;
+		public IReadOnlyList<int> Layers => _viewLayersModel.Layers;
+		
+
+		public RootViewModel(IMetaModel metaModel, ITimeModel timeModel, IViewLayersModel viewLayersModel)
 		{
 			_metaModel = metaModel;
 			_timeModel = timeModel;
 			_viewLayersModel = viewLayersModel;
-			CurrentState = ApplicationViewStates.Loading;
+			_currentState = ApplicationViewStates.Loading;
 		}
 		
 		public void Update()
@@ -34,9 +48,9 @@ namespace Models.ApplicationViewModel
 				Init();
 			}
 
-			if (CurrentState == ApplicationViewStates.Loading)
+			if (_currentState == ApplicationViewStates.Loading)
 				LoadingUpdate();
-			else if (CurrentState == ApplicationViewStates.Lobby)
+			else if (_currentState == ApplicationViewStates.Lobby)
 				LobbyUpdate();
 		}
 
@@ -58,7 +72,7 @@ namespace Models.ApplicationViewModel
 		private void LoadingUpdate()
 		{
 			
-			if (CurrentState == ApplicationViewStates.Loading)
+			if (_currentState == ApplicationViewStates.Loading)
 			{
 				if (_metaModel.IsConnected)
 				{
@@ -70,7 +84,7 @@ namespace Models.ApplicationViewModel
 
 		private void TransitFromLoadingToLobby()
 		{
-			CurrentState = ApplicationViewStates.Lobby;
+			_currentState = ApplicationViewStates.Lobby;
 			_viewLayersModel.HideAll();
 			_viewLayersModel.ShowViewOnTop(ViewsConfiguration.LobbyViewId);
 		}

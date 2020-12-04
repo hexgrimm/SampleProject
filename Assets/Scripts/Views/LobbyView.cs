@@ -1,4 +1,4 @@
-using System;
+using EventUtils;
 using UnityEngine;
 
 namespace Views
@@ -6,20 +6,20 @@ namespace Views
 	public class LobbyView : ViewBase<LobbyWindowPrefabLinks>, ILobbyView
 	{
 		private readonly IUpdater _updater;
+		private readonly Signal _requestCoinsButton = new Signal();
 		
+		public ISignal RequestCoinsButton => _requestCoinsButton;
+
 		public LobbyView(GameObject prefab, Transform parent) : base(prefab, parent)
 		{
 			
 		}
 
-		public override void Show()
+		public void ShowOnLayer(int layerIndex)
 		{
 			base.Show();
-		}
-
-		public void SubscribeToRequestButton(Action action)
-		{
-			PrefabLink.RequestButton.onClick.AddListener(action.Invoke);
+			GameObjectInstance.transform.SetSiblingIndex(layerIndex);
+			PrefabLink.RequestButton.onClick.AddListener(_requestCoinsButton.Raise);
 		}
 
 		public void SetCoinsValue(int value)
