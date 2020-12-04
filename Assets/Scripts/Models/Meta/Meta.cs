@@ -4,7 +4,7 @@ using EventUtils;
 
 namespace Models.Meta
 {
-	public class MetaModel : IMetaModel, IUpdateableModel
+	public class Meta : IMetaModel, IUpdateable
 	{
 		private const float NetworkDelay = 0.42f;
 		private readonly ITimeModel _timeModel;
@@ -19,7 +19,7 @@ namespace Models.Meta
 		private readonly List<(float requestTime, Promise promise, Action action)> _requests = 
 			new List<(float requestTime, Promise promise, Action action)>();
 		
-		public MetaModel(ITimeModel timeModel, IMetaService metaService)
+		public Meta(ITimeModel timeModel, IMetaService metaService)
 		{
 			_timeModel = timeModel;
 			_metaService = metaService;

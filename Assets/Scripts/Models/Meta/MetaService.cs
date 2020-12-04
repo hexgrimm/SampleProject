@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Models.Meta
 {
-	public class MetaService : IMetaService, IUpdateableModel
+	public class MetaService : IMetaService, IUpdateable
 	{
 		private readonly ITimeModel _timeModel;
 		private float? _emulateConnectDelay;

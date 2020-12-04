@@ -5,7 +5,7 @@ using Models.ViewLayersModel;
 namespace Models.ApplicationViewModel
 {
 	//TODO: convert it into a context for state pattern
-	public class RootViewModel : IUpdateableModel, IApplicationViewModel
+	public class ApplicationViewModel : IUpdateable, IApplicationViewModel
 	{
 		private readonly IMetaModel _metaModel;
 		private readonly ITimeModel _timeModel;
@@ -32,7 +32,7 @@ namespace Models.ApplicationViewModel
 		public IReadOnlyList<int> Layers => _viewLayersModel.Layers;
 		
 
-		public RootViewModel(IMetaModel metaModel, ITimeModel timeModel, IViewLayersModel viewLayersModel)
+		public ApplicationViewModel(IMetaModel metaModel, ITimeModel timeModel, IViewLayersModel viewLayersModel)
 		{
 			_metaModel = metaModel;
 			_timeModel = timeModel;

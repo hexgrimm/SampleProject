@@ -34,6 +34,9 @@ namespace Views
 
 		public override void Hide()
 		{
+			if (GameObjectInstance == null)
+				return;
+			
 			PrefabLink.RequestButton.onClick.RemoveAllListeners();
 			base.Hide();
 		}

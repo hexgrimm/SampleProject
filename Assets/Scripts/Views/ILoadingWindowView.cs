@@ -1,7 +1,9 @@
 namespace Views
 {
-	public interface ILoadingWindowView : IViewBase
+	public interface ILoadingWindowView
 	{
 		void EnableSpinnerRotation();
+		void ShowOnLayer(int layerIndex);
+		void Hide();
 	}
 }

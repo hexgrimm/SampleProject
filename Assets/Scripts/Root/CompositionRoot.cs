@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
 using Models;
+using Models.ApplicationViewModel;
 using Models.Meta;
+using Models.ViewLayersModel;
 using Presenters;
 using UnityEngine;
 using Views;
+using Time = Models.Time;
 
 namespace Root
 {
@@ -24,25 +27,33 @@ namespace Root
 
 		private void BuildCodeTree()
 		{
-			List<IUpdateableModel> models = new List<IUpdateableModel>();
+			List<IUpdateable> models = new List<IUpdateable>();
 			
-			var loadingWindowView = new LoadingView(LoadingPrefab, UiRoot, this);
-			var lobbyView = new LobbyView(LobbyPrefab, UiRoot);
-			
-			var timeModel = new TimeModel();
-			var appInitModel = new AppInitModel(timeModel);
-			var metaService = new MetaService(timeModel, 2);
-			var metaModel = new MetaModel(timeModel, metaService);
-			
-			var presenterStateFactory = new PresenterStateFactory(loadingWindowView, appInitModel, lobbyView, metaModel, timeModel);
-			
+			var timeModel = new Time();
 			models.Add(timeModel);
-			models.Add(appInitModel);
+
+			var metaService = new MetaService(timeModel, 2);
 			models.Add(metaService);
+
+			var metaModel = new Meta(timeModel, metaService);
 			models.Add(metaModel);
 			
-			var modelUpdaterInOrder = new ModelUpdaterInOrder(models);
-			var presenter = new RootPresenter(modelUpdaterInOrder, presenterStateFactory, this);
+			var viewLayersModel = new ViewLayersModel();
+			models.Add(viewLayersModel);
+
+			var appViewModel = new ApplicationViewModel(metaModel, timeModel, viewLayersModel);
+			models.Add(appViewModel);
+
+
+			var presenters = new List<IUpdateablePresenter>();
+			
+			var lobbyView = new LobbyView(LobbyPrefab, UiRoot);
+			presenters.Add(new LobbyViewPresenter(lobbyView, appViewModel));
+			
+			var loadingWindowView = new LoadingView(LoadingPrefab, UiRoot, this);
+			presenters.Add(new LoadingPresenter(loadingWindowView, appViewModel));
+			
+			var rootUpdater = new ApplicationLoop(models, presenters, this);
 		}
 
 		private void Update()

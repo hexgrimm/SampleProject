@@ -1,45 +1,55 @@
-using EventUtils;
 using Models;
+using Models.ApplicationViewModel;
 using Views;
 
 namespace Presenters
 {
-	public class LoadingPresenter : PresenterStateBase
+	public class LoadingPresenter : IUpdateablePresenter
 	{
 		private readonly ILoadingWindowView _loadingWindowView;
-		private readonly IAppInitModel _appInitModel;
+		private readonly IApplicationViewModel _applicationViewModel;
+		private bool _dataTransferEnabled;
 
-		private readonly EventDelay _loadCompleteDelay = new EventDelay(); 
-		
-		public LoadingPresenter(ILoadingWindowView loadingWindowView, IAppInitModel appInitModel)
+		public LoadingPresenter(ILoadingWindowView loadingWindowView, IApplicationViewModel applicationViewModel)
 		{
 			_loadingWindowView = loadingWindowView;
-			_appInitModel = appInitModel;
+			_applicationViewModel = applicationViewModel;
 		}
 		
-		public override void OnEnter()
+		public void PreModelUpdate()
 		{
-			_loadingWindowView.Show();
+			
+		}
+
+		public void PostModelUpdate()
+		{
+			if (_applicationViewModel.LayersChanged.Get)
+			{
+				UpdateViewState();
+			}
+			
+			if (!_dataTransferEnabled)
+				return;
+			
+			
 			_loadingWindowView.EnableSpinnerRotation();
-			_appInitModel.AllPluginsInitialized += _loadCompleteDelay.MethodForDirectSubscribing;
-			_loadCompleteDelay.SetCallback(OnModelLoadComplete);
 		}
-		
-		public override void OnExit()
+
+		private void UpdateViewState()
 		{
+			for (int i = 0; i < _applicationViewModel.Layers.Count; i++)
+			{
+				var item = _applicationViewModel.Layers[i];
+				if (item == ViewsConfiguration.LobbyViewId)
+				{
+					_loadingWindowView.ShowOnLayer(i);
+					_dataTransferEnabled = true;
+					return;
+				}
+			}
+
 			_loadingWindowView.Hide();
-			_appInitModel.AllPluginsInitialized -= _loadCompleteDelay.MethodForDirectSubscribing;
-		}
-
-		public override void PostModelUpdate()
-		{
-			base.PostModelUpdate();
-			_loadCompleteDelay.PollChanges(); //this way we can reorder reactions of every model change or skip some which are unnecessary (_loadCompleteEvent.ClearCalls)
-		}
-
-		private void OnModelLoadComplete()
-		{
-			SetNewState(StateFactory.CreateLobbyState());
+			_dataTransferEnabled = false;
 		}
 	}
 }

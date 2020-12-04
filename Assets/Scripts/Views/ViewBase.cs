@@ -17,13 +17,22 @@ namespace Views
 
 		public virtual void Show()
 		{
+			if (GameObjectInstance != null)
+			{
+				GameObjectInstance.SetActive(true);
+				return;
+			}
+			
 			GameObjectInstance = Object.Instantiate(_prefab, _parent);
 			PrefabLink = GameObjectInstance.GetComponent<T>();
 		}
 
 		public virtual void Hide()
 		{
-			GameObject.Destroy(GameObjectInstance);
+			if (GameObjectInstance != null)
+			{
+				GameObjectInstance.SetActive(false);
+			}
 		}
 	}
 }

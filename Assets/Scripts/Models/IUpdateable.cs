@@ -1,6 +1,6 @@
 namespace Models
 {
-	public interface IUpdateableModel
+	public interface IUpdateable
 	{
 		void Update();
 	}

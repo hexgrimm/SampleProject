@@ -3,7 +3,7 @@ using EventUtils;
 
 namespace Models.ViewLayersModel
 {
-	public class ViewLayersModel : IViewLayersModel
+	public class ViewLayersModel : IViewLayersModel, IUpdateable
 	{
 		private readonly List<int> _layers = new List<int>();
 		private readonly Signal _layersChanged = new Signal();
@@ -46,6 +46,11 @@ namespace Models.ViewLayersModel
 		{
 			_layers.Clear();
 			_layersChanged.Raise();
+		}
+
+		public void Update()
+		{
+			
 		}
 	}
 }

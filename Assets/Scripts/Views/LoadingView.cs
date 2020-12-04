@@ -23,6 +23,12 @@ namespace Views
 			}
 		}
 
+		public void ShowOnLayer(int layerIndex)
+		{
+			base.Show();
+			GameObjectInstance.transform.SetSiblingIndex(layerIndex);
+		}
+
 		private void RotateSpinnerMethod()
 		{
 			PrefabLink.Spinner.transform.Rotate(0, 0, 90 * Time.deltaTime);
