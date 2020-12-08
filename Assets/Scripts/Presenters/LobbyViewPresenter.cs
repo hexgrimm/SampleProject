@@ -4,21 +4,25 @@ using Views;
 
 namespace Presenters
 {
-	public class LoadingPresenter : IUpdateablePresenter
+	public class LobbyViewPresenter : IUpdateablePresenter
 	{
-		private readonly ILoadingWindowView _loadingWindowView;
+		private readonly ILobbyView _lobbyView;
 		private readonly IApplicationViewModel _applicationViewModel;
+
 		private bool _dataTransferEnabled;
 
-		public LoadingPresenter(ILoadingWindowView loadingWindowView, IApplicationViewModel applicationViewModel)
+		public LobbyViewPresenter(ILobbyView lobbyView, IApplicationViewModel applicationViewModel)
 		{
-			_loadingWindowView = loadingWindowView;
+			_lobbyView = lobbyView;
 			_applicationViewModel = applicationViewModel;
 		}
-		
+
 		public void PreModelUpdate()
 		{
-			
+			if (_lobbyView.RequestCoinsButton.Get)
+			{
+				_applicationViewModel.RequestMoreCoins.Raise();
+			}
 		}
 
 		public void PostModelUpdate()
@@ -31,8 +35,8 @@ namespace Presenters
 			if (!_dataTransferEnabled)
 				return;
 			
-			
-			_loadingWindowView.EnableSpinnerRotation();
+			_lobbyView.SetDeltaTimeValue(_applicationViewModel.DeltaTime);
+			_lobbyView.SetCoinsValue(_applicationViewModel.Coins);
 		}
 
 		private void UpdateViewState()
@@ -42,13 +46,13 @@ namespace Presenters
 				var item = _applicationViewModel.Layers[i];
 				if (item == ViewsConfiguration.LobbyViewId)
 				{
-					_loadingWindowView.ShowOnLayer(i);
+					_lobbyView.ShowOnLayer(i);
 					_dataTransferEnabled = true;
 					return;
 				}
 			}
 
-			_loadingWindowView.Hide();
+			_lobbyView.Hide();
 			_dataTransferEnabled = false;
 		}
 	}

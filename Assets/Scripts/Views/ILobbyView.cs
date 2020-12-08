@@ -1,10 +1,14 @@
 using System;
+using EventUtils;
 
 namespace Views
 {
-	public interface ILobbyView : IViewBase
+	public interface ILobbyView
 	{
-		void SubscribeToRequestButton(Action action);
+		ISignal RequestCoinsButton { get; }
+		
+		void ShowOnLayer(int layerIndex);
+		void Hide();
 		void SetCoinsValue(int value);
 		void SetDeltaTimeValue(float value);
 	}

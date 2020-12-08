@@ -2,11 +2,11 @@ using UnityEngine;
 
 namespace Views
 {
-	public class ViewBase<T> : IViewBase where T : MonoBehaviour
+	public class ViewBase<T> where T : MonoBehaviour
 	{
 		private readonly GameObject _prefab;
 		private readonly Transform _parent;
-		private GameObject _go;
+		protected GameObject GameObjectInstance;
 		protected T PrefabLink;
 
 		public ViewBase(GameObject prefab, Transform parent)
@@ -17,13 +17,22 @@ namespace Views
 
 		public virtual void Show()
 		{
-			_go = Object.Instantiate(_prefab, _parent);
-			PrefabLink = _go.GetComponent<T>();
+			if (GameObjectInstance != null)
+			{
+				GameObjectInstance.SetActive(true);
+				return;
+			}
+			
+			GameObjectInstance = Object.Instantiate(_prefab, _parent);
+			PrefabLink = GameObjectInstance.GetComponent<T>();
 		}
 
 		public virtual void Hide()
 		{
-			GameObject.Destroy(_go);
+			if (GameObjectInstance != null)
+			{
+				GameObjectInstance.SetActive(false);
+			}
 		}
 	}
 }
