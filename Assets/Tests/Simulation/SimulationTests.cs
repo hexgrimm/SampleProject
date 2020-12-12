@@ -1,5 +1,8 @@
+using System.Collections;
 using NUnit.Framework;
+using UnityEditor.SceneManagement;
 using UnityEngine.SceneManagement;
+using UnityEngine.TestTools;
 using Views.SimulationVIew;
 
 namespace Editor.Tests.Simulation
@@ -9,16 +12,36 @@ namespace Editor.Tests.Simulation
 	{
 		private SimulationView _view;
 
-		[SetUp]
-		public void SetUp()
+		[UnityTest]
+		public IEnumerable Init()
 		{
-			_view = new SimulationView(SceneManager.GetSceneByBuildIndex(1));
-		}
+			var scene = SceneManager.GetSceneByName("SimulationScene");
+			var sl = new SceneTestLoader();
 
-		[Test]
-		public void Init()
-		{
+			yield return null;
+			yield return null;
+			_view = new SimulationView(scene, sl);
 			_view.SimulatePhysics(0.02f);
+			
+			yield return null;
+			yield return null;
+			
+			_view.Dispose();
+			yield break;
+		}
+		
+		private class SceneTestLoader : ISceneLoader
+		{
+			public void LoadScene(Scene scene)
+			{
+				var lp = new LoadSceneParameters(LoadSceneMode.Additive, LocalPhysicsMode.Physics3D);
+				SceneManager.LoadScene(scene.name, lp);
+			}
+
+			public void UnloadScene(Scene scene)
+			{
+				SceneManager.UnloadSceneAsync(scene);
+			}
 		}
 	}
 }

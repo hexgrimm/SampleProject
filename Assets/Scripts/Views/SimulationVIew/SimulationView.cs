@@ -6,15 +6,16 @@ namespace Views.SimulationVIew
 	public class SimulationView
 	{
 		private readonly Scene _scene;
-		
+		private readonly ISceneLoader _sceneLoader;
+
 		private GameObject _prefabInstance;
 		private PhysicsScene _physicsScene;
 		private GameObject _rootObject;
 
-		public SimulationView(Scene scene)
+		public SimulationView(Scene scene, ISceneLoader sceneLoader)
 		{
-			var lp = new LoadSceneParameters(LoadSceneMode.Single, LocalPhysicsMode.Physics3D);
-			SceneManager.LoadScene(scene.name, lp);
+			_sceneLoader = sceneLoader;
+			_sceneLoader.LoadScene(scene);
 			
 			_physicsScene = scene.GetPhysicsScene();
 			_scene = scene;
@@ -43,6 +44,11 @@ namespace Views.SimulationVIew
 			_physicsScene.Simulate(deltaTime);
 		}
 
+		public void Dispose()
+		{
+			_sceneLoader.UnloadScene(_scene);
+		}
+
 		private void ReCreateRootObject()
 		{
 			if (_rootObject != null)
@@ -54,5 +60,11 @@ namespace Views.SimulationVIew
 			SceneManager.MoveGameObjectToScene(_rootObject, _scene);
 			GameObject.DontDestroyOnLoad(_rootObject);
 		}
+	}
+
+	public interface ISceneLoader
+	{
+		void LoadScene(Scene scene);
+		void UnloadScene(Scene scene);
 	}
 }
