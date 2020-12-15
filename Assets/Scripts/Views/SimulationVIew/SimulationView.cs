@@ -4,17 +4,17 @@ namespace Views.SimulationVIew
 {
 	public class SimulationView
 	{
-		private readonly IScenePhysics _scenePhysics;
+		private readonly IPhysicsScene _physicsScene;
 
 		private GameObject _instance;
 		private GameObject _prefab;
 
-		public SimulationView(IScenePhysics scenePhysics)
+		public SimulationView(IPhysicsScene physicsScene)
 		{
-			_scenePhysics = scenePhysics;
+			_physicsScene = physicsScene;
 		}
 
-		public void InjectLoadedPrefab(GameObject prefab)
+		public void InstantiatePrefab(GameObject prefab)
 		{
 			_prefab = prefab;
 			
@@ -24,27 +24,34 @@ namespace Views.SimulationVIew
 				Debug.LogWarning("Loading prefab duplicate");
 			}
 			
-			_instance = Object.Instantiate(prefab, _scenePhysics.RootTransform);
+			_instance = Object.Instantiate(prefab, _physicsScene.RootTransform);
 			_instance.SetActive(false);
 		}
 
 		public void Show()
 		{
-			_instance.SetActive(true);
+			if (_instance != null)
+				_instance.SetActive(true);
 		}
 
-		public void DestroyGameInstances()
+		public void Hide()
+		{
+			if (_instance != null)
+				_instance.SetActive(false);
+		}
+
+		public void DestroyInstanceForUnload()
 		{
 			GameObject.Destroy(_instance);
 		}
 
 		public void SimulatePhysics(float deltaTime)
 		{
-			_scenePhysics.SimulatePhysics(deltaTime);
+			_physicsScene.SimulatePhysics(deltaTime);
 		}
 	}
 
-	public interface IScenePhysics
+	public interface IPhysicsScene
 	{
 		void SimulatePhysics(float deltaTime);
 		Transform RootTransform { get; }

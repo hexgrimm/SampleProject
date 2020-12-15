@@ -15,9 +15,8 @@ namespace Root
 	{
 		public event Action UpdateEvent = () => { };
 		
-		//just for example. This can be injected as resource database or smth to views directly.
-		public GameObject LoadingPrefab;
-		public GameObject LobbyPrefab;
+		public AssetLinks AssetLinks;
+		
 		public Transform UiRoot;
 
 		void Start()
@@ -44,14 +43,15 @@ namespace Root
 			var appViewModel = new ApplicationViewModel(metaModel, timeModel, viewLayersModel);
 			models.Add(appViewModel);
 
-
 			var presenters = new List<IUpdateablePresenter>();
 			
-			var lobbyView = new LobbyView(LobbyPrefab, UiRoot);
+			var lobbyView = new LobbyView(AssetLinks.LobbyWindowPrefab, UiRoot);
 			presenters.Add(new LobbyViewPresenter(lobbyView, appViewModel));
 			
-			var loadingWindowView = new LoadingView(LoadingPrefab, UiRoot, this);
+			var loadingWindowView = new LoadingView(AssetLinks.LoadingWindowPrefab, UiRoot, this);
 			presenters.Add(new LoadingPresenter(loadingWindowView, appViewModel));
+			
+			
 			
 			var rootUpdater = new ApplicationLoop(models, presenters, this);
 		}
