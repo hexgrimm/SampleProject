@@ -2,7 +2,7 @@
 
 namespace Views.SimulationVIew
 {
-	public class SimulationView
+	public class SimulationView : ISimulationView
 	{
 		private readonly IPhysicsScene _physicsScene;
 

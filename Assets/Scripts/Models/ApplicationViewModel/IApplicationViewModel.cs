@@ -5,14 +5,18 @@ namespace Models.ApplicationViewModel
 {
 	public interface IApplicationViewModel
 	{
-		ISignal LayersChanged { get; }
-		IReadOnlyList<int> Layers { get; }
+		//Before Update
+		ISignalSource RequestMoreCoins { get; }
+		ISignalSource<int> ExchangeCoinsToCrystals { get; }
+		void StartNewGame();
 
+		//After Update
 		int Coins { get; }
 		int Crystals { get; }
 		float DeltaTime { get; }
 		
-		ISignalSource RequestMoreCoins { get; }
-		ISignalSource<int> ExchangeCoinsToCrystals { get; }
+		IReadOnlyList<int> Layers { get; }
+		ISignal LayersChanged { get; }
+		ISignal<bool> GameRunning { get; }
 	}
 }

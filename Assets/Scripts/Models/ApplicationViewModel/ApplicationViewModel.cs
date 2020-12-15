@@ -17,7 +17,16 @@ namespace Models.ApplicationViewModel
 		private ApplicationViewStates _currentState;
 		
 		private readonly Signal _requestMoreCoins = new Signal();
+		
 		private readonly Signal<int> _exchangeCoinsToCrystals = new Signal<int>();
+
+		private readonly Signal _startNewGame = new Signal();
+		private readonly Signal<bool> _gameRunning = new Signal<bool>();
+
+		public void StartNewGame()
+		{
+			_startNewGame.Raise();
+		}
 
 		public int Coins => _metaModel.Coins;
 
@@ -29,6 +38,9 @@ namespace Models.ApplicationViewModel
 		public ISignalSource<int> ExchangeCoinsToCrystals => _exchangeCoinsToCrystals;
 
 		public ISignal LayersChanged => _viewLayersModel.LayersChanged;
+
+		public ISignal<bool> GameRunning => _gameRunning;
+
 		public IReadOnlyList<int> Layers => _viewLayersModel.Layers;
 		
 
@@ -52,6 +64,13 @@ namespace Models.ApplicationViewModel
 				LoadingUpdate();
 			else if (_currentState == ApplicationViewStates.Lobby)
 				LobbyUpdate();
+			else if (_currentState == ApplicationViewStates.Game)
+				GameUpdate();
+		}
+
+		private void GameUpdate()
+		{
+			
 		}
 
 		private void LobbyUpdate()
@@ -67,11 +86,15 @@ namespace Models.ApplicationViewModel
 				_discPopupShown = false;
 				_viewLayersModel.HideView(ViewsConfiguration.DisconnectedPopUpViewId);
 			}
+
+			if (_startNewGame.Get)
+			{
+				TransitFromLobbyToGame();
+			}
 		}
 
 		private void LoadingUpdate()
 		{
-			
 			if (_currentState == ApplicationViewStates.Loading)
 			{
 				if (_metaModel.IsConnected)
@@ -88,6 +111,13 @@ namespace Models.ApplicationViewModel
 			_viewLayersModel.HideAll();
 			_viewLayersModel.ShowViewOnTop(ViewsConfiguration.LobbyViewId);
 		}
+		
+		private void TransitFromLobbyToGame()
+		{
+			_currentState = ApplicationViewStates.Game;
+			_viewLayersModel.HideAll();
+			_gameRunning.Raise(true);
+		}
 
 		private void Init()
 		{
@@ -100,6 +130,7 @@ namespace Models.ApplicationViewModel
 		{
 			Loading,
 			Lobby,
+			Game,
 		}
 	}
 }
