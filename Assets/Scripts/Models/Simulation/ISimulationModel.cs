@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace Views.SimulationVIew
 {
-	public interface ISimulationView
+	public interface ISimulationModel
 	{
-		void InstantiatePrefab(GameObject prefab);
+		void InstantiatePrefab();
 		void Show();
 		void Hide();
 		void DestroyInstanceForUnload();

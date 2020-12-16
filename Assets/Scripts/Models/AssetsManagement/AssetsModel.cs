@@ -1,4 +1,4 @@
-namespace Models
+namespace Models.AssetsManagement
 {
 	public class AssetsModel : IAssetsModel
 	{

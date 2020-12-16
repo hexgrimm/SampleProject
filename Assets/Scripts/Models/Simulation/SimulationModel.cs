@@ -1,22 +1,25 @@
 ﻿using UnityEngine;
+using Views.SimulationVIew;
 
-namespace Views.SimulationVIew
+namespace Models.Simulation
 {
-	public class SimulationView : ISimulationView
+	public class SimulationModel : ISimulationModel
 	{
 		private readonly IPhysicsScene _physicsScene;
+		private readonly IAssetsModel _assetsModel;
 
 		private GameObject _instance;
 		private GameObject _prefab;
 
-		public SimulationView(IPhysicsScene physicsScene)
+		public SimulationModel(IPhysicsScene physicsScene, IAssetsModel assetsModel)
 		{
 			_physicsScene = physicsScene;
+			_assetsModel = assetsModel;
 		}
 
-		public void InstantiatePrefab(GameObject prefab)
+		public void InstantiatePrefab()
 		{
-			_prefab = prefab;
+			_prefab = _assetsModel.Links.SimulationPrefab;
 			
 			if (_instance != null)
 			{
@@ -24,7 +27,7 @@ namespace Views.SimulationVIew
 				Debug.LogWarning("Loading prefab duplicate");
 			}
 			
-			_instance = Object.Instantiate(prefab, _physicsScene.RootTransform);
+			_instance = Object.Instantiate(_prefab, _physicsScene.RootTransform);
 			_instance.SetActive(false);
 		}
 

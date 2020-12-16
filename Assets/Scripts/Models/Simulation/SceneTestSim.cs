@@ -1,6 +1,7 @@
 #if UNITY_EDITOR //To use it inside unit test without play mode
 using UnityEditor.SceneManagement;
 #endif
+using Models.Simulation;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

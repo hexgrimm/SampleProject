@@ -1,4 +1,5 @@
 using System.Collections;
+using Models.Simulation;
 using NUnit.Framework;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -10,7 +11,7 @@ namespace Editor.Tests.Simulation
 {
 	public class SimulationPlayModeTests
 	{
-		private SimulationView _view;
+		private SimulationModel _view;
 		private PhysicsSceneTestSim _physicsSceneSym;
 
 		[UnitySetUp]
@@ -25,10 +26,10 @@ namespace Editor.Tests.Simulation
 		{
 			//yield return new EnterPlayMode();
 
-			_view = new SimulationView(_physicsSceneSym);
+			//_view = new SimulationModel();
 			yield return new WaitForEndOfFrame();
 			
-			_view.InstantiatePrefab(GameObject.CreatePrimitive(PrimitiveType.Cube));
+			//_view.InstantiatePrefab(GameObject.CreatePrimitive(PrimitiveType.Cube));
 			for (int i = 0; i < 4; i++)
 			{
 				_view.SimulatePhysics(0.02f);

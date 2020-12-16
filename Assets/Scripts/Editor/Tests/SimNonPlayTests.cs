@@ -1,3 +1,4 @@
+using Models.Simulation;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,10 +15,10 @@ namespace Editor.Tests
 		public void Test1()
 		{
 			var sl = new PhysicsSceneTestSim("Sim1");
-			var view = new SimulationView(sl);
-			view.InstantiatePrefab(new GameObject());
-			view.Show();
-			view.SimulatePhysics(1f);
+			//var view = new SimulationModel(sl);
+			//view.InstantiatePrefab(new GameObject());
+			//view.Show();
+			//view.SimulatePhysics(1f);
 		}
 	}
 }

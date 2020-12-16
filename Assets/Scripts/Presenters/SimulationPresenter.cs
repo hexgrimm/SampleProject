@@ -6,11 +6,11 @@ namespace Presenters
 {
 	public class SimulationPresenter : IUpdateablePresenter
 	{
-		private readonly ISimulationView _view;
+		private readonly ISimulationModel _view;
 		private readonly IAssetsModel _assetsModel;
 		private readonly IApplicationViewModel _applicationViewModel;
 
-		public SimulationPresenter(ISimulationView view, IAssetsModel assetsModel, IApplicationViewModel applicationViewModel)
+		public SimulationPresenter(ISimulationModel view, IAssetsModel assetsModel, IApplicationViewModel applicationViewModel)
 		{
 			_view = view;
 			_assetsModel = assetsModel;
@@ -19,7 +19,7 @@ namespace Presenters
 
 		public void PreModelUpdate()
 		{
-			_view.SimulatePhysics();
+			_view.SimulatePhysics(1);
 		}
 
 		public void PostModelUpdate()

@@ -1,3 +1,5 @@
+using Models.AssetsManagement;
+
 namespace Models
 {
 	public interface IAssetsModel

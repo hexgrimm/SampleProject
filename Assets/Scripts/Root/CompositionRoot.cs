@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Models;
 using Models.ApplicationViewModel;
+using Models.AssetsManagement;
 using Models.Meta;
 using Models.ViewLayersModel;
 using Presenters;
