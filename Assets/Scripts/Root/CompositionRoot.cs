@@ -4,10 +4,12 @@ using Models;
 using Models.ApplicationViewModel;
 using Models.AssetsManagement;
 using Models.Meta;
+using Models.Simulation;
 using Models.ViewLayersModel;
 using Presenters;
 using UnityEngine;
 using Views;
+using Views.SimulationVIew;
 using Time = Models.Time;
 
 namespace Root
@@ -41,7 +43,12 @@ namespace Root
 			var viewLayersModel = new ViewLayersModel();
 			models.Add(viewLayersModel);
 
-			var appViewModel = new ApplicationViewModel(metaModel, timeModel, viewLayersModel);
+			var assetsModel = new AssetsModel(AssetLinks);
+			var phys = new PhysicsSceneSimulation("Sim1");
+
+			var simModel = new SimulationModel(phys, assetsModel);
+			
+			var appViewModel = new ApplicationViewModel(metaModel, timeModel, viewLayersModel, simModel);
 			models.Add(appViewModel);
 
 			var presenters = new List<IUpdateablePresenter>();

@@ -1,18 +1,26 @@
 using System;
+using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Models.AssetsManagement
 {
-	[Serializable]
-	public class AssetLinks
+	[CreateAssetMenu(fileName = @"Assets\ResourceLinks.asset")]
+	public class AssetLinks : ScriptableObject
 	{
 		public GameObject CanvasInstance;
 		
-		[ResourceAddress]
-		public string LoadingWindowPrefab;
-		[ResourceAddress]
-		public string LobbyWindowPrefab;
-		[ResourceAddress]
-		public string SimulationPrefab;
+		public GameObject LoadingWindowPrefab;
+		public GameObject LobbyWindowPrefab;
+		
+		[Header("Resource Links:")]
+		public ResourceLink SimulationPrefabLink;
+	}
+
+	[Serializable]
+	public class ResourceLink
+	{
+		public string PathInAssets;
+		public string Id;
 	}
 }

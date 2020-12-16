@@ -7,13 +7,13 @@ using UnityEngine.SceneManagement;
 
 namespace Views.SimulationVIew
 {
-	public class PhysicsSceneTestSim : IPhysicsScene
+	public class PhysicsSceneSimulation : IPhysicsSceneSimulation
 	{
 		private readonly string _sceneName;
 		private Scene _scene;
 		private PhysicsScene _physics;
 
-		public PhysicsSceneTestSim(string sceneName)
+		public PhysicsSceneSimulation(string sceneName)
 		{
 			_sceneName = sceneName;
 

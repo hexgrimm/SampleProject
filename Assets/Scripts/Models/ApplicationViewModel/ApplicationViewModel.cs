@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using EventUtils;
 using Models.ViewLayersModel;
+using Views.SimulationVIew;
 
 namespace Models.ApplicationViewModel
 {
@@ -10,7 +11,8 @@ namespace Models.ApplicationViewModel
 		private readonly IMetaModel _metaModel;
 		private readonly ITimeModel _timeModel;
 		private readonly IViewLayersModel _viewLayersModel;
-		
+		private readonly ISimulationModel _simulationModel;
+
 		private bool _isInitialized = false;
 		private bool _discPopupShown;
 		
@@ -44,11 +46,12 @@ namespace Models.ApplicationViewModel
 		public IReadOnlyList<int> Layers => _viewLayersModel.Layers;
 		
 
-		public ApplicationViewModel(IMetaModel metaModel, ITimeModel timeModel, IViewLayersModel viewLayersModel)
+		public ApplicationViewModel(IMetaModel metaModel, ITimeModel timeModel, IViewLayersModel viewLayersModel, ISimulationModel simulationModel)
 		{
 			_metaModel = metaModel;
 			_timeModel = timeModel;
 			_viewLayersModel = viewLayersModel;
+			_simulationModel = simulationModel;
 			_currentState = ApplicationViewStates.Loading;
 		}
 		
@@ -117,6 +120,9 @@ namespace Models.ApplicationViewModel
 			_currentState = ApplicationViewStates.Game;
 			_viewLayersModel.HideAll();
 			_gameRunning.Raise(true);
+			
+			_simulationModel.InstantiatePrefab();
+			_simulationModel.Show();
 		}
 
 		private void Init()

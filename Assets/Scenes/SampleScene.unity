@@ -411,12 +411,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ea448624fd84f52bdda56976382441a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AssetLinks:
-    CanvasInstance: {fileID: 130524523}
-    LoadingWindowPrefab: {fileID: 3516491796247164717, guid: 22dd6543fca3d8946989cef5cab9cad3,
-      type: 3}
-    LobbyWindowPrefab: {fileID: 5883610606906485680, guid: b76bd7ce5cc36be4a9eb3a847968427c,
-      type: 3}
-    SimulationPrefab: {fileID: 5241788843072535966, guid: 729dd0970080d17409d79d268db90bac,
-      type: 3}
+  AssetLinks: {fileID: 11400000, guid: e6b966af9040deb458bb7999194dc544, type: 2}
   UiRoot: {fileID: 130524527}

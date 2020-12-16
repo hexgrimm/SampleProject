@@ -12,12 +12,12 @@ namespace Editor.Tests.Simulation
 	public class SimulationPlayModeTests
 	{
 		private SimulationModel _view;
-		private PhysicsSceneTestSim _physicsSceneSym;
+		private PhysicsSceneSimulation _physicsSceneSym;
 
 		[UnitySetUp]
 		public IEnumerator SetUp()
 		{
-			_physicsSceneSym = new PhysicsSceneTestSim("Sim1");
+			_physicsSceneSym = new PhysicsSceneSimulation("Sim1");
 			yield break;
 		}
 		
