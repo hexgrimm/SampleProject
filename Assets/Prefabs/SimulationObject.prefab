@@ -1365,7 +1365,6 @@ GameObject:
   - component: {fileID: 5241788842667788666}
   - component: {fileID: 5241788842667788647}
   - component: {fileID: 5241788842667788644}
-  - component: {fileID: 5241788842667788645}
   m_Layer: 0
   m_Name: Knife (1)
   m_TagString: Untagged
@@ -1434,19 +1433,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &5241788842667788645
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5241788842667788667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aac1fa004230de54e8854a3b62fceb22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MovementVector: {x: 0, y: -0.1, z: 0}
 --- !u!1 &5241788842694605953
 GameObject:
   m_ObjectHideFlags: 0
@@ -2219,7 +2205,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5241788843072535961}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: SimulationObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
