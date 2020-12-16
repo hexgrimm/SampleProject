@@ -23,6 +23,10 @@ namespace Presenters
 			{
 				_applicationViewModel.RequestMoreCoins.Raise();
 			}
+			else if (_lobbyView.StartGameButton.Get)
+			{
+				_applicationViewModel.StartNewGame();
+			}
 		}
 
 		public void PostModelUpdate()

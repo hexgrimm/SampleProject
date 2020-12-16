@@ -7,8 +7,11 @@ namespace Views
 	{
 		private readonly IUpdater _updater;
 		private readonly Signal _requestCoinsButton = new Signal();
-		
+		private readonly Signal _startGameButton = new Signal();
+
 		public ISignal RequestCoinsButton => _requestCoinsButton;
+
+		public ISignal StartGameButton => _startGameButton;
 
 		public LobbyView(GameObject prefab, Transform parent) : base(prefab, parent)
 		{
@@ -20,6 +23,7 @@ namespace Views
 			base.Show();
 			GameObjectInstance.transform.SetSiblingIndex(layerIndex);
 			PrefabLink.RequestButton.onClick.AddListener(_requestCoinsButton.Raise);
+			PrefabLink.StartGameButton.onClick.AddListener(_startGameButton.Raise);
 		}
 
 		public void SetCoinsValue(int value)

@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: ResourceLinks
   m_EditorClassIdentifier: 
   CanvasInstance: {fileID: 0}
-  LoadingWindowPrefab: {fileID: 0}
-  LobbyWindowPrefab: {fileID: 0}
+  LoadingWindowPrefab: {fileID: 3516491796247164717, guid: 22dd6543fca3d8946989cef5cab9cad3,
+    type: 3}
+  LobbyWindowPrefab: {fileID: 5883610606906485680, guid: b76bd7ce5cc36be4a9eb3a847968427c,
+    type: 3}
   SimulationPrefabLink:
     PathInAssets: Assets/Prefabs/SimulationObject.prefab
     Id: simulationobject

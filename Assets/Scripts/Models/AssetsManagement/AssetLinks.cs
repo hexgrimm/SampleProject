@@ -8,8 +8,6 @@ namespace Models.AssetsManagement
 	[CreateAssetMenu(fileName = @"Assets\ResourceLinks.asset")]
 	public class AssetLinks : ScriptableObject
 	{
-		public GameObject CanvasInstance;
-		
 		public GameObject LoadingWindowPrefab;
 		public GameObject LobbyWindowPrefab;
 		

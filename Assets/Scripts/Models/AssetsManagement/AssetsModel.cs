@@ -17,7 +17,7 @@ namespace Models.AssetsManagement
 		public GameObject LoadAsset(string id)
 		{
 			#if UNITY_EDITOR
-			return AssetDatabase.LoadAssetAtPath<GameObject>(id);
+			return AssetDatabase.LoadAssetAtPath<GameObject>(Links.SimulationPrefabLink.PathInAssets);
 			#endif
 		}
 	}

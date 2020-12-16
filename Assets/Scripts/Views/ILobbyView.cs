@@ -6,6 +6,7 @@ namespace Views
 	public interface ILobbyView
 	{
 		ISignal RequestCoinsButton { get; }
+		ISignal StartGameButton { get; }
 		
 		void ShowOnLayer(int layerIndex);
 		void Hide();
