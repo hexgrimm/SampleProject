@@ -24,7 +24,7 @@ namespace Views.SimulationVIew
 					localPhysicsMode = LocalPhysicsMode.Physics3D,
 				});
 			}
-			else
+			else//test
 			{
 				#if UNITY_EDITOR //To use it inside unit test without play mode
 				_scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
