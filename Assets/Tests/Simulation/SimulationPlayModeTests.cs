@@ -32,7 +32,7 @@ namespace Editor.Tests.Simulation
 			//_view.InstantiatePrefab(GameObject.CreatePrimitive(PrimitiveType.Cube));
 			for (int i = 0; i < 4; i++)
 			{
-				_view.SimulatePhysics(0.02f);
+				_view.Update(0.02f);
 				yield return new WaitForSeconds(0.1f);
 			}
 

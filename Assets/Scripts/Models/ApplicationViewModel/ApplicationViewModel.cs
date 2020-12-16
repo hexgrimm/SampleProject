@@ -73,7 +73,7 @@ namespace Models.ApplicationViewModel
 
 		private void GameUpdate()
 		{
-			
+			_simulationModel.Update(_timeModel.DeltaTime);
 		}
 
 		private void LobbyUpdate()

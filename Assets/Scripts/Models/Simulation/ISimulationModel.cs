@@ -8,6 +8,6 @@ namespace Views.SimulationVIew
 		void Show();
 		void Hide();
 		void DestroyInstanceForUnload();
-		void SimulatePhysics(float deltaTime);
+		void Update(float deltaTime);
 	}
 }

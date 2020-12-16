@@ -32,10 +32,7 @@ namespace Views.SimulationVIew
 			}
 
 			_physics = _scene.GetPhysicsScene();
-
-			Physics.autoSimulation = false;
-			Physics.autoSyncTransforms = false;
-			Physics.gravity = new Vector3(0, -9.81f, 0);
+			
 			var go = new GameObject("Simulation-root");
 			SceneManager.MoveGameObjectToScene(go, _scene);
 			RootTransform = go.transform;
