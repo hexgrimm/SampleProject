@@ -4,11 +4,12 @@ using EventUtils;
 
 namespace Models.Meta
 {
-	public class Meta : IMetaModel, IUpdateable
+	public class MetaModel : IMetaModel
 	{
 		private const float NetworkDelay = 0.42f;
 		private readonly ITimeModel _timeModel;
 		private readonly IMetaService _metaService;
+		private readonly IUpdateWatcher _updateWatcher;
 
 		public int Coins { get; private set; } = 100;
 		
@@ -19,10 +20,11 @@ namespace Models.Meta
 		private readonly List<(float requestTime, Promise promise, Action action)> _requests = 
 			new List<(float requestTime, Promise promise, Action action)>();
 		
-		public Meta(ITimeModel timeModel, IMetaService metaService)
+		public MetaModel(ITimeModel timeModel, IMetaService metaService, IUpdateWatcher updateWatcher)
 		{
 			_timeModel = timeModel;
 			_metaService = metaService;
+			_updateWatcher = updateWatcher;
 		}
 		
 		public IPromise RequestMoreCoins()
@@ -64,6 +66,9 @@ namespace Models.Meta
 
 		public void Update()
 		{
+			_updateWatcher.RegisterUpdate();
+			_metaService.Update();
+			
 			IsConnected = _metaService.IsConnected;
 			
 			for (int i = _requests.Count - 1; i >= 0; i--)

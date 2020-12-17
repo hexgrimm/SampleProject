@@ -3,8 +3,9 @@ using EventUtils;
 
 namespace Models.ViewLayersModel
 {
-	public class ViewLayersModel : IViewLayersModel, IUpdateable
+	public class ViewLayersModel : IViewLayersModel
 	{
+		private readonly IUpdateWatcher _updateWatcher;
 		private readonly List<int> _layers = new List<int>();
 		private readonly Signal _layersChanged = new Signal();
 
@@ -12,6 +13,11 @@ namespace Models.ViewLayersModel
 
 		public IReadOnlyList<int> Layers => _layers;
 
+		public ViewLayersModel(IUpdateWatcher updateWatcher)
+		{
+			_updateWatcher = updateWatcher;
+		}
+		
 		public void ShowViewOnTop(int viewId)
 		{
 			for (int i = 0; i < _layers.Count; i++)
@@ -50,7 +56,7 @@ namespace Models.ViewLayersModel
 
 		public void Update()
 		{
-			
+			_updateWatcher.RegisterUpdate();
 		}
 	}
 }

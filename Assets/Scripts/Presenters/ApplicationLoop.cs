@@ -7,13 +7,13 @@ namespace Presenters
 {	//General orchestrator of an application execution flow. Fully non-Unity
 	public class ApplicationLoop
 	{
-		private readonly IList<IUpdateable> _modelsInOrder;
+		private readonly IUpdateable _applicationModel;
 		private readonly IList<IUpdateablePresenter> _presentersInOrder;
 		private readonly IUpdater _updater;
 
-		public ApplicationLoop(IList<IUpdateable> modelsInOrder, IList<IUpdateablePresenter> presentersInOrder, IUpdater updater)
+		public ApplicationLoop(IUpdateable applicationModel, IList<IUpdateablePresenter> presentersInOrder, IUpdater updater)
 		{
-			_modelsInOrder = modelsInOrder;
+			_applicationModel = applicationModel;
 			_presentersInOrder = presentersInOrder;
 			updater.UpdateEvent += Update;
 		}
@@ -24,12 +24,9 @@ namespace Presenters
 			{
 				updateablePresenter.PreModelUpdate();
 			}
-			
-			foreach (var updateableModel in _modelsInOrder)
-			{
-				updateableModel.Update();
-			}
-			
+
+			_applicationModel.Update();
+
 			foreach (var updateablePresenter in _presentersInOrder)
 			{
 				updateablePresenter.PostModelUpdate();

@@ -10,7 +10,7 @@ namespace Editor.Tests
 	{
 		private ITimeModel _timeModel;
 		private IMetaService _service;
-		private Meta _test;
+		private MetaModel _testModel;
 		
 		[SetUp]
 		public void SetUp()
@@ -21,66 +21,66 @@ namespace Editor.Tests
 			_service = Substitute.For<IMetaService>();
 			_service.IsConnected.ReturnsForAnyArgs(true);
 			
-			_test = new Meta(_timeModel, _service);
+			_testModel = new MetaModel(_timeModel, _service, Substitute.For<IUpdateWatcher>());
 		}
 		
 		[Test]
 		public void UpdateTest()
 		{
-			_test.Update();
+			_testModel.Update();
 		}
 
 		[Test]
 		public void RequestMoreCoins()
 		{
-			var initialCoins = _test.Coins;
+			var initialCoins = _testModel.Coins;
 			
-			var promise = _test.RequestMoreCoins();
+			var promise = _testModel.RequestMoreCoins();
 
 			Assert.IsTrue(!promise.IsCompleted);
 
 			_timeModel.RealTimeSinceStartup.ReturnsForAnyArgs(4);
-			_test.Update();
+			_testModel.Update();
 			
 			Assert.IsTrue(promise.IsCompleted);
 			Assert.IsTrue(!promise.IsFaulted);
-			Assert.IsTrue(_test.Coins != initialCoins);
+			Assert.IsTrue(_testModel.Coins != initialCoins);
 		}
 		
 		[Test]
 		public void RequestExchangeCoins()
 		{
-			var initialCoins = _test.Coins;
-			var initialCrystals = _test.Crystals;
+			var initialCoins = _testModel.Coins;
+			var initialCrystals = _testModel.Crystals;
 			
-			var promise = _test.ExchangeCoinsToCrystals(10);
+			var promise = _testModel.ExchangeCoinsToCrystals(10);
 
 			Assert.IsTrue(!promise.IsCompleted);
 
 			_timeModel.RealTimeSinceStartup.ReturnsForAnyArgs(4);
-			_test.Update();
+			_testModel.Update();
 			
 			Assert.IsTrue(promise.IsCompleted);
 			Assert.IsTrue(!promise.IsFaulted);
-			Assert.IsTrue(_test.Coins == initialCoins - 10);
-			Assert.IsTrue(_test.Crystals == initialCrystals + 10);
+			Assert.IsTrue(_testModel.Coins == initialCoins - 10);
+			Assert.IsTrue(_testModel.Crystals == initialCrystals + 10);
 		}
 
 		[Test]
 		public void PromiseFailIfNoConnection()
 		{
-			var initialCoins = _test.Coins;
+			var initialCoins = _testModel.Coins;
 
 			_service.IsConnected.ReturnsForAnyArgs(false);
 			
-			var promise = _test.ExchangeCoinsToCrystals(10);
+			var promise = _testModel.ExchangeCoinsToCrystals(10);
 			
 			_timeModel.RealTimeSinceStartup.ReturnsForAnyArgs(4);
-			_test.Update();
+			_testModel.Update();
 			
 			Assert.IsTrue(promise.IsCompleted);
 			Assert.IsTrue(promise.IsFaulted);
-			Assert.IsTrue(_test.Coins == initialCoins);
+			Assert.IsTrue(_testModel.Coins == initialCoins);
 		}
 	}
 }

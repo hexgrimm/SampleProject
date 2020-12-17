@@ -6,12 +6,13 @@ using Models.ViewLayersModel;
 namespace Models.ApplicationViewModel
 {
 	//TODO: convert it into a context for state pattern
-	public class RootModel : IUpdateable, IRootModel
+	public class ApplicationModel : IUpdateable, IRootModel
 	{
 		private readonly IMetaModel _metaModel;
 		private readonly ITimeModel _timeModel;
 		private readonly IViewLayersModel _viewLayersModel;
 		private readonly ISimulationModel _simulationModel;
+		private readonly IUpdateWatcher _updateWatcher;
 
 		private bool _isInitialized = false;
 		private bool _discPopupShown;
@@ -40,13 +41,14 @@ namespace Models.ApplicationViewModel
 
 		public IReadOnlyList<int> Layers => _viewLayersModel.Layers;
 		
-
-		public RootModel(IMetaModel metaModel, ITimeModel timeModel, IViewLayersModel viewLayersModel, ISimulationModel simulationModel)
+		public ApplicationModel(IMetaModel metaModel, ITimeModel timeModel, IViewLayersModel viewLayersModel,
+			ISimulationModel simulationModel, IUpdateWatcher updateWatcher)
 		{
 			_metaModel = metaModel;
 			_timeModel = timeModel;
 			_viewLayersModel = viewLayersModel;
 			_simulationModel = simulationModel;
+			_updateWatcher = updateWatcher;
 			_currentState = ApplicationViewStates.Loading;
 		}
 		
@@ -57,7 +59,14 @@ namespace Models.ApplicationViewModel
 				_isInitialized = true;
 				Init();
 			}
-
+			
+			_updateWatcher.RegisterUpdate();
+			
+			_timeModel.Update();
+			_viewLayersModel.Update();
+			_simulationModel.Update(_timeModel.DeltaTime);
+			
+			
 			if (_currentState == ApplicationViewStates.Loading)
 				LoadingUpdate();
 			else if (_currentState == ApplicationViewStates.Lobby)
@@ -78,7 +87,8 @@ namespace Models.ApplicationViewModel
 
 		private void GameUpdate()
 		{
-			_simulationModel.Update(_timeModel.DeltaTime);
+			_metaModel.Update();
+			
 			if (_quitGame.Get)
 			{
 				TransitFromGameToLobby();
@@ -87,6 +97,8 @@ namespace Models.ApplicationViewModel
 
 		private void LobbyUpdate()
 		{
+			_metaModel.Update();
+			
 			if (!_metaModel.IsConnected && !_discPopupShown)
 			{
 				_discPopupShown = true;
@@ -107,6 +119,8 @@ namespace Models.ApplicationViewModel
 
 		private void LoadingUpdate()
 		{
+			_metaModel.Update();
+			
 			if (_currentState == ApplicationViewStates.Loading)
 			{
 				if (_metaModel.IsConnected)

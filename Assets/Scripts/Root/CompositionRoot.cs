@@ -9,7 +9,6 @@ using Models.ViewLayersModel;
 using Presenters;
 using UnityEngine;
 using Views;
-using Time = Models.Time;
 
 namespace Root
 {
@@ -28,42 +27,33 @@ namespace Root
 
 		private void BuildCodeTree()
 		{
-			List<IUpdateable> models = new List<IUpdateable>();
-			
-			var timeModel = new Time();
-			models.Add(timeModel);
+			var timeModel = new TimeModel(new UpdateWatcher());
 
-			var metaService = new MetaService(timeModel, 2);
-			models.Add(metaService);
+			var metaService = new MetaService(timeModel, new UpdateWatcher(), 2f);
 
-			var metaModel = new Meta(timeModel, metaService);
-			models.Add(metaModel);
-			
-			var viewLayersModel = new ViewLayersModel();
-			models.Add(viewLayersModel);
+			var metaModel = new MetaModel(timeModel, metaService, new UpdateWatcher());
 
-			var assetsModel = new AssetsModel(AssetLinks);
+			var viewLayersModel = new ViewLayersModel(new UpdateWatcher());
+
+			var assetsModel = new AssetsModel(AssetLinks, new UpdateWatcher());
 			var phys = new PhysicsSceneSimulation("Sim1");
 
 			var simModel = new SimulationModel(phys, assetsModel);
 			
-			var appViewModel = new RootModel(metaModel, timeModel, viewLayersModel, simModel);
-			models.Add(appViewModel);
+			var applicationModel = new ApplicationModel(metaModel, timeModel, viewLayersModel, simModel, new UpdateWatcher());
 
 			var presenters = new List<IUpdateablePresenter>();
 			
 			var lobbyView = new LobbyView(AssetLinks.LobbyWindowPrefab, UiRoot);
-			presenters.Add(new LobbyViewPresenter(lobbyView, appViewModel));
+			presenters.Add(new LobbyViewPresenter(lobbyView, applicationModel));
 			
 			var loadingWindowView = new LoadingView(AssetLinks.LoadingWindowPrefab, UiRoot, this);
-			presenters.Add(new LoadingPresenter(loadingWindowView, appViewModel));
+			presenters.Add(new LoadingPresenter(loadingWindowView, applicationModel));
 			
 			var gameWindowView = new GameWindow(AssetLinks.GameWindowPrefab, UiRoot);
-			presenters.Add(new GameWindowPresenter(gameWindowView, appViewModel));
+			presenters.Add(new GameWindowPresenter(gameWindowView, applicationModel));
 			
-			
-			
-			var rootUpdater = new ApplicationLoop(models, presenters, this);
+			var rootUpdater = new ApplicationLoop(applicationModel, presenters, this);
 		}
 
 		private void Update()

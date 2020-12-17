@@ -1,6 +1,6 @@
 namespace Models.Meta
 {
-	public interface IMetaService
+	public interface IMetaService : IUpdateable
 	{
 		bool IsConnected { get; }
 	}

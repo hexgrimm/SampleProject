@@ -56,19 +56,19 @@ namespace Models.Simulation
 			if (_simulationLinks == null)
 				return;
 			
-			const float fixedTime = 0.02f;
+			const float fixedTime = 0.05f;
 
 			int fullIterations = (int) (deltaTime / fixedTime);
 			float addition = deltaTime - (fullIterations * fixedTime);
 			
-			for (int i = 0; i < fullIterations - 1; i++)
+			for (int i = 0; i < fullIterations; i++)
 			{
 				_simulationLinks.KnifeMono.UpdateObject(fixedTime);
 				_physicsSceneSimulation.SimulatePhysics(fixedTime);
 			}
 			
-			_simulationLinks.KnifeMono.UpdateObject(fixedTime + addition);
-			_physicsSceneSimulation.SimulatePhysics(fixedTime + addition);
+			_simulationLinks.KnifeMono.UpdateObject(addition);
+			_physicsSceneSimulation.SimulatePhysics(addition);
 		}
 	}
 
