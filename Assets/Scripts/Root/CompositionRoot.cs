@@ -7,6 +7,7 @@ using Models.Meta;
 using Models.Simulation;
 using Models.ViewLayersModel;
 using Presenters;
+using Presenters.CoreLoop;
 using UnityEngine;
 using Views;
 using PhysicsScene = Models.Simulation.PhysicsScene;

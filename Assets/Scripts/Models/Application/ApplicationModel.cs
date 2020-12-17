@@ -5,7 +5,7 @@ using Models.ViewLayersModel;
 
 namespace Models.ApplicationViewModel
 {
-	//TODO: convert it into a context for state pattern
+	//TODO: convert it into a context for a state pattern
 	public class ApplicationModel : IUpdateable, IRootModel
 	{
 		private readonly IMetaModel _metaModel;

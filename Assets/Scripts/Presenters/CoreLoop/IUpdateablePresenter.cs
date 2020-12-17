@@ -1,4 +1,4 @@
-namespace Presenters
+namespace Presenters.CoreLoop
 {
 	public interface IUpdateablePresenter
 	{

@@ -3,11 +3,6 @@ using UnityEngine;
 
 namespace Models
 {
-	public interface IUpdateWatcher
-	{
-		void RegisterUpdate();
-	}
-
 	public class UpdateWatcher : IUpdateWatcher
 	{
 		private int _lastFrameOfUpdate;

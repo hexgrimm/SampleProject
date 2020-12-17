@@ -1,9 +1,7 @@
 using System.Collections.Generic;
 using Models;
-using UnityEngine;
-using Views;
 
-namespace Presenters
+namespace Presenters.CoreLoop
 {	//General orchestrator of an application execution flow. Fully non-Unity
 	public class ApplicationLoop
 	{
