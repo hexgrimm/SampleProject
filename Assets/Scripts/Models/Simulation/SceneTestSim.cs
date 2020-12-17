@@ -6,15 +6,15 @@ using UnityEngine.SceneManagement;
 
 namespace Models.Simulation
 {
-	public class PhysicsSceneSimulation : IPhysicsSceneSimulation
+	public class PhysicsScene : IPhysicsScene
 	{
 		private readonly string _sceneName;
 		private Scene _scene;
-		private PhysicsScene _physics;
+		private UnityEngine.PhysicsScene _physics;
 
 		public Transform RootTransform { get; }
 		
-		public PhysicsSceneSimulation(string sceneName)
+		public PhysicsScene(string sceneName)
 		{
 			_sceneName = sceneName;
 

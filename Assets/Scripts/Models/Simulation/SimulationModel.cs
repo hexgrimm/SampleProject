@@ -5,16 +5,16 @@ namespace Models.Simulation
 {
 	public class SimulationModel : ISimulationModel
 	{
-		private readonly IPhysicsSceneSimulation _physicsSceneSimulation;
+		private readonly IPhysicsScene _physicsScene;
 		private readonly IAssetsModel _assetsModel;
 
 		private GameObject _instance;
 		private SimulationLinks _simulationLinks;
 		private GameObject _prefab;
 
-		public SimulationModel(IPhysicsSceneSimulation physicsSceneSimulation, IAssetsModel assetsModel)
+		public SimulationModel(IPhysicsScene physicsScene, IAssetsModel assetsModel)
 		{
-			_physicsSceneSimulation = physicsSceneSimulation;
+			_physicsScene = physicsScene;
 			_assetsModel = assetsModel;
 		}
 
@@ -28,7 +28,7 @@ namespace Models.Simulation
 				Debug.LogWarning("Loading prefab duplicate");
 			}
 			
-			_instance = Object.Instantiate(_prefab, _physicsSceneSimulation.RootTransform);
+			_instance = Object.Instantiate(_prefab, _physicsScene.RootTransform);
 			_simulationLinks = _instance.GetComponent<SimulationLinks>();
 			_instance.SetActive(false);
 		}
@@ -64,17 +64,11 @@ namespace Models.Simulation
 			for (int i = 0; i < fullIterations; i++)
 			{
 				_simulationLinks.KnifeMono.UpdateObject(fixedTime);
-				_physicsSceneSimulation.SimulatePhysics(fixedTime);
+				_physicsScene.SimulatePhysics(fixedTime);
 			}
 			
 			_simulationLinks.KnifeMono.UpdateObject(addition);
-			_physicsSceneSimulation.SimulatePhysics(addition);
+			_physicsScene.SimulatePhysics(addition);
 		}
-	}
-
-	public interface IPhysicsSceneSimulation
-	{
-		void SimulatePhysics(float deltaTime);
-		Transform RootTransform { get; }
 	}
 }

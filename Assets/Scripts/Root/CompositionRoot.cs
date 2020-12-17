@@ -9,6 +9,7 @@ using Models.ViewLayersModel;
 using Presenters;
 using UnityEngine;
 using Views;
+using PhysicsScene = Models.Simulation.PhysicsScene;
 
 namespace Root
 {
@@ -35,7 +36,7 @@ namespace Root
 			var viewLayersModel = new LayersModel(new UpdateWatcher("Layers Model"));
 
 			var assetsModel = new AssetsModel(AssetLinks, new UpdateWatcher("Asset Model"));
-			var phys = new PhysicsSceneSimulation("Sim1");
+			var phys = new PhysicsScene("Sim1");
 
 			var simModel = new SimulationModel(phys, assetsModel);
 			

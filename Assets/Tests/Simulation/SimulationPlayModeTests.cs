@@ -7,18 +7,19 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
+using PhysicsScene = Models.Simulation.PhysicsScene;
 
 namespace Editor.Tests.Simulation
 {
 	public class SimulationPlayModeTests
 	{
 		private SimulationModel _simModel;
-		private PhysicsSceneSimulation _physicsSceneSym;
+		private PhysicsScene _physicsSceneSym;
 
 		[UnitySetUp]
 		public IEnumerator SetUp()
 		{
-			_physicsSceneSym = new PhysicsSceneSimulation("Sim1");
+			_physicsSceneSym = new PhysicsScene("Sim1");
 			yield break;
 		}
 		
