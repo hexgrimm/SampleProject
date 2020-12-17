@@ -40,6 +40,12 @@ namespace Models.Simulation
 
 		public void SimulatePhysics(float deltaTime)
 		{
+			if (deltaTime <= 0f)
+			{
+				Debug.LogWarning("deltaTime <= 0");
+				return;
+			}
+			
 			_physics.Simulate(deltaTime);
 		}
 
