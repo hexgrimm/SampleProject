@@ -9,16 +9,14 @@ namespace Presenters
 	{
 		private readonly IUpdateable _applicationModel;
 		private readonly IList<IUpdateablePresenter> _presentersInOrder;
-		private readonly IUpdater _updater;
 
-		public ApplicationLoop(IUpdateable applicationModel, IList<IUpdateablePresenter> presentersInOrder, IUpdater updater)
+		public ApplicationLoop(IUpdateable applicationModel, IList<IUpdateablePresenter> presentersInOrder)
 		{
 			_applicationModel = applicationModel;
 			_presentersInOrder = presentersInOrder;
-			updater.UpdateEvent += Update;
 		}
 
-		private void Update()
+		public void Update()
 		{
 			foreach (var updateablePresenter in _presentersInOrder)
 			{

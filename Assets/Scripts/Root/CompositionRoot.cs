@@ -12,11 +12,11 @@ using Views;
 
 namespace Root
 {
-	public class CompositionRoot : MonoBehaviour, IUpdater
+	public class CompositionRoot : MonoBehaviour
 	{
-		public event Action UpdateEvent = () => { };
 		public AssetLinks AssetLinks;
 		public Transform UiRoot;
+		private ApplicationLoop _rootLoop;
 
 		void Start()
 		{
@@ -45,7 +45,7 @@ namespace Root
 			
 			//views
 			var lobbyView = new LobbyView(AssetLinks.LobbyWindowPrefab, UiRoot);
-			var loadingWindowView = new LoadingView(AssetLinks.LoadingWindowPrefab, UiRoot, this);
+			var loadingWindowView = new LoadingView(AssetLinks.LoadingWindowPrefab, UiRoot);
 			var gameWindowView = new GameWindow(AssetLinks.GameWindowPrefab, UiRoot);
 			
 			//presenters
@@ -54,12 +54,12 @@ namespace Root
 			presenters.Add(new GameWindowPresenter(gameWindowView, applicationModel));
 			
 			//root
-			var rootUpdater = new ApplicationLoop(applicationModel, presenters, this);
+			_rootLoop = new ApplicationLoop(applicationModel, presenters);
 		}
 
 		private void Update()
 		{
-			UpdateEvent();
+			_rootLoop.Update();
 		}
 	}
 }

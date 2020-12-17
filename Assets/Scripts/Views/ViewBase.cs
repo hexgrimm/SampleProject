@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Views
 {
-	public class ViewBase<T> where T : MonoBehaviour
+	public abstract class ViewBase<T> where T : MonoBehaviour
 	{
 		private readonly GameObject _prefab;
 		private readonly Transform _parent;
@@ -15,24 +15,29 @@ namespace Views
 			_parent = parent;
 		}
 
-		protected void Instantiate()
+		public void ShowOnLayer(int layerIndex)
 		{
-			if (GameObjectInstance != null)
+			if (GameObjectInstance == null)
 			{
-				GameObjectInstance.SetActive(true);
-				return;
+				GameObjectInstance = Object.Instantiate(_prefab, _parent);
+				PrefabLink = GameObjectInstance.GetComponent<T>();
 			}
-			
-			GameObjectInstance = Object.Instantiate(_prefab, _parent);
-			PrefabLink = GameObjectInstance.GetComponent<T>();
+
+			GameObjectInstance.SetActive(true);
+			GameObjectInstance.transform.SetSiblingIndex(layerIndex);
+			ShowInternal();
 		}
 
 		public virtual void Hide()
 		{
 			if (GameObjectInstance != null)
 			{
+				HideInternal();
 				GameObjectInstance.SetActive(false);
 			}
 		}
+		
+		protected abstract void ShowInternal();
+		protected abstract void HideInternal();
 	}
 }

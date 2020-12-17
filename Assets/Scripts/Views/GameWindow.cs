@@ -14,19 +14,14 @@ namespace Views
 			
 		}
 
-		public void ShowOnLayer(int layerIndex)
+		protected override void ShowInternal()
 		{
-			base.Instantiate();
 			PrefabLink.QuitGameButton.onClick.AddListener(_quitGameButton.Raise);
 		}
 
-		public override void Hide()
+		protected override void HideInternal()
 		{
-			if (GameObjectInstance == null)
-				return;
-			
 			PrefabLink.QuitGameButton.onClick.RemoveAllListeners();
-			base.Hide();
 		}
 	}
 }

@@ -1,48 +1,39 @@
+using DG.Tweening;
 using UnityEngine;
 
 namespace Views
 {
 	public class LoadingView : ViewBase<LoadingViewPrefabLinks>, ILoadingWindowView
 	{
-		private readonly IUpdater _updater;
-		private bool _isRotating;
+		private Sequence _sequence;
 		
-		public LoadingView(GameObject prefab, Transform parent, IUpdater updater) : base(prefab, parent)
+		public LoadingView(GameObject prefab, Transform parent) : base(prefab, parent)
 		{
-			_updater = updater;
+			
 		}
 
 		public void EnableSpinnerRotation()
 		{
-			//better use dotween or start animation. I injected updater just as shortcut
-
-			if (!_isRotating)
+			if (_sequence == null)
 			{
-				_isRotating = true;
-				_updater.UpdateEvent += RotateSpinnerMethod;
+				_sequence = DOTween.Sequence()
+					.Append(PrefabLink.Spinner.transform.DORotate(new Vector3(0, 0, 90), 1, RotateMode.FastBeyond360))
+					.SetLoops(-1);
 			}
 		}
 
-		public void ShowOnLayer(int layerIndex)
+		protected override void ShowInternal()
 		{
-			base.Instantiate();
-			GameObjectInstance.transform.SetSiblingIndex(layerIndex);
-		}
-
-		private void RotateSpinnerMethod()
-		{
-			PrefabLink.Spinner.transform.Rotate(0, 0, 90 * Time.deltaTime);
-		}
-
-		public override void Hide()
-		{
-			if (_isRotating)
-			{
-				_updater.UpdateEvent -= RotateSpinnerMethod;
-				_isRotating = false;
-			}
 			
-			base.Hide();
+		}
+
+		protected override void HideInternal()
+		{
+			if (_sequence != null)
+			{
+				_sequence.Rewind();
+				_sequence.Kill();
+			}
 		}
 	}
 }
