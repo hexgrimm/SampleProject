@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46b71fa12aaa4b5486314999ca484c50, type: 3}
   m_Name: ResourceLinks
   m_EditorClassIdentifier: 
-  CanvasInstance: {fileID: 0}
   LoadingWindowPrefab: {fileID: 3516491796247164717, guid: 22dd6543fca3d8946989cef5cab9cad3,
     type: 3}
   LobbyWindowPrefab: {fileID: 5883610606906485680, guid: b76bd7ce5cc36be4a9eb3a847968427c,
+    type: 3}
+  GameWindowPrefab: {fileID: 7072051757337895127, guid: 0db29ed3f3522724a92d8d4f3691d1ed,
     type: 3}
   SimulationPrefabLink:
     PathInAssets: Assets/Prefabs/SimulationObject.prefab

@@ -2,8 +2,12 @@ namespace Models
 {
 	public class ViewsConfiguration
 	{
-		public const int LoadingViewId = 0;
-		public const int LobbyViewId = 1;
-		public const int DisconnectedPopUpViewId = 2;
+		public enum ViewWindowId
+		{
+			LoadingViewWindowId = 0,
+			LobbyViewWindowId = 1,
+			DisconnectedPopUpViewId = 2,
+			GameViewWindowId = 3,
+		}
 	}
 }

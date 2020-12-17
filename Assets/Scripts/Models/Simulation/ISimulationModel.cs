@@ -1,6 +1,4 @@
-using UnityEngine;
-
-namespace Views.SimulationVIew
+namespace Models.Simulation
 {
 	public interface ISimulationModel
 	{

@@ -20,7 +20,7 @@ namespace Views
 
 		public void ShowOnLayer(int layerIndex)
 		{
-			base.Show();
+			base.Instantiate();
 			GameObjectInstance.transform.SetSiblingIndex(layerIndex);
 			PrefabLink.RequestButton.onClick.AddListener(_requestCoinsButton.Raise);
 			PrefabLink.StartGameButton.onClick.AddListener(_startGameButton.Raise);
@@ -42,6 +42,7 @@ namespace Views
 				return;
 			
 			PrefabLink.RequestButton.onClick.RemoveAllListeners();
+			PrefabLink.StartGameButton.onClick.RemoveAllListeners();
 			base.Hide();
 		}
 	}

@@ -9,7 +9,6 @@ using Models.ViewLayersModel;
 using Presenters;
 using UnityEngine;
 using Views;
-using Views.SimulationVIew;
 using Time = Models.Time;
 
 namespace Root
@@ -48,7 +47,7 @@ namespace Root
 
 			var simModel = new SimulationModel(phys, assetsModel);
 			
-			var appViewModel = new ApplicationViewModel(metaModel, timeModel, viewLayersModel, simModel);
+			var appViewModel = new RootModel(metaModel, timeModel, viewLayersModel, simModel);
 			models.Add(appViewModel);
 
 			var presenters = new List<IUpdateablePresenter>();
@@ -58,6 +57,9 @@ namespace Root
 			
 			var loadingWindowView = new LoadingView(AssetLinks.LoadingWindowPrefab, UiRoot, this);
 			presenters.Add(new LoadingPresenter(loadingWindowView, appViewModel));
+			
+			var gameWindowView = new GameWindow(AssetLinks.GameWindowPrefab, UiRoot);
+			presenters.Add(new GameWindowPresenter(gameWindowView, appViewModel));
 			
 			
 			

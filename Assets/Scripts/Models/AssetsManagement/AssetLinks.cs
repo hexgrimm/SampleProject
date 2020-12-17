@@ -10,6 +10,7 @@ namespace Models.AssetsManagement
 	{
 		public GameObject LoadingWindowPrefab;
 		public GameObject LobbyWindowPrefab;
+		public GameObject GameWindowPrefab;
 		
 		[Header("Resource Links:")]
 		public ResourceLink SimulationPrefabLink;

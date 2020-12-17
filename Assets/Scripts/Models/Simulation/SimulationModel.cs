@@ -1,6 +1,5 @@
 ﻿using GameSimService;
 using UnityEngine;
-using Views.SimulationVIew;
 
 namespace Models.Simulation
 {
@@ -54,19 +53,22 @@ namespace Models.Simulation
 
 		public void Update(float deltaTime)
 		{
-			const float fixedTime = 0.003f;
+			if (_simulationLinks == null)
+				return;
+			
+			const float fixedTime = 0.02f;
 
 			int fullIterations = (int) (deltaTime / fixedTime);
 			float addition = deltaTime - (fullIterations * fixedTime);
 			
-			for (int i = 0; i < fullIterations; i++)
+			for (int i = 0; i < fullIterations - 1; i++)
 			{
 				_simulationLinks.KnifeMono.UpdateObject(fixedTime);
 				_physicsSceneSimulation.SimulatePhysics(fixedTime);
 			}
 			
-			_simulationLinks.KnifeMono.UpdateObject(addition);
-			_physicsSceneSimulation.SimulatePhysics(addition);
+			_simulationLinks.KnifeMono.UpdateObject(fixedTime + addition);
+			_physicsSceneSimulation.SimulatePhysics(fixedTime + addition);
 		}
 	}
 

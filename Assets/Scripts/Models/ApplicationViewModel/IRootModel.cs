@@ -3,12 +3,13 @@ using EventUtils;
 
 namespace Models.ApplicationViewModel
 {
-	public interface IApplicationViewModel
+	public interface IRootModel
 	{
 		//Before Update
 		ISignalSource RequestMoreCoins { get; }
 		ISignalSource<int> ExchangeCoinsToCrystals { get; }
 		void StartNewGame();
+		void QuitGame();
 
 		//After Update
 		int Coins { get; }

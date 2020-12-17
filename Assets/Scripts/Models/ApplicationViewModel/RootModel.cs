@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using EventUtils;
+using Models.Simulation;
 using Models.ViewLayersModel;
-using Views.SimulationVIew;
 
 namespace Models.ApplicationViewModel
 {
 	//TODO: convert it into a context for state pattern
-	public class ApplicationViewModel : IUpdateable, IApplicationViewModel
+	public class RootModel : IUpdateable, IRootModel
 	{
 		private readonly IMetaModel _metaModel;
 		private readonly ITimeModel _timeModel;
@@ -23,15 +23,10 @@ namespace Models.ApplicationViewModel
 		private readonly Signal<int> _exchangeCoinsToCrystals = new Signal<int>();
 
 		private readonly Signal _startNewGame = new Signal();
+		private readonly Signal _quitGame = new Signal();
 		private readonly Signal<bool> _gameRunning = new Signal<bool>();
 
-		public void StartNewGame()
-		{
-			_startNewGame.Raise();
-		}
-
 		public int Coins => _metaModel.Coins;
-
 		public int Crystals => _metaModel.Crystals;
 		public float DeltaTime => _timeModel.DeltaTime;
 
@@ -46,7 +41,7 @@ namespace Models.ApplicationViewModel
 		public IReadOnlyList<int> Layers => _viewLayersModel.Layers;
 		
 
-		public ApplicationViewModel(IMetaModel metaModel, ITimeModel timeModel, IViewLayersModel viewLayersModel, ISimulationModel simulationModel)
+		public RootModel(IMetaModel metaModel, ITimeModel timeModel, IViewLayersModel viewLayersModel, ISimulationModel simulationModel)
 		{
 			_metaModel = metaModel;
 			_timeModel = timeModel;
@@ -71,9 +66,23 @@ namespace Models.ApplicationViewModel
 				GameUpdate();
 		}
 
+		public void StartNewGame()
+		{
+			_startNewGame.Raise();
+		}
+
+		public void QuitGame()
+		{
+			_quitGame.Raise();
+		}
+
 		private void GameUpdate()
 		{
 			_simulationModel.Update(_timeModel.DeltaTime);
+			if (_quitGame.Get)
+			{
+				TransitFromGameToLobby();
+			}
 		}
 
 		private void LobbyUpdate()
@@ -81,13 +90,13 @@ namespace Models.ApplicationViewModel
 			if (!_metaModel.IsConnected && !_discPopupShown)
 			{
 				_discPopupShown = true;
-				_viewLayersModel.ShowViewOnTop(ViewsConfiguration.DisconnectedPopUpViewId);
+				_viewLayersModel.ShowViewOnTop((int) ViewsConfiguration.ViewWindowId.DisconnectedPopUpViewId);
 			}
 
 			if (_metaModel.IsConnected && _discPopupShown)
 			{
 				_discPopupShown = false;
-				_viewLayersModel.HideView(ViewsConfiguration.DisconnectedPopUpViewId);
+				_viewLayersModel.HideView((int) ViewsConfiguration.ViewWindowId.DisconnectedPopUpViewId);
 			}
 
 			if (_startNewGame.Get)
@@ -112,26 +121,38 @@ namespace Models.ApplicationViewModel
 		{
 			_currentState = ApplicationViewStates.Lobby;
 			_viewLayersModel.HideAll();
-			_viewLayersModel.ShowViewOnTop(ViewsConfiguration.LobbyViewId);
+			_viewLayersModel.ShowViewOnTop((int) ViewsConfiguration.ViewWindowId.LobbyViewWindowId);
 		}
 		
 		private void TransitFromLobbyToGame()
 		{
 			_currentState = ApplicationViewStates.Game;
 			_viewLayersModel.HideAll();
+			_viewLayersModel.ShowViewOnTop((int) ViewsConfiguration.ViewWindowId.GameViewWindowId);
+			
 			_gameRunning.Raise(true);
 			
 			_simulationModel.InstantiatePrefab();
 			_simulationModel.Show();
 		}
 
+		private void TransitFromGameToLobby()
+		{
+			_currentState = ApplicationViewStates.Lobby;
+			
+			_simulationModel.Hide();
+			_simulationModel.DestroyInstanceForUnload();
+			
+			_viewLayersModel.HideAll();
+			_viewLayersModel.ShowViewOnTop((int) ViewsConfiguration.ViewWindowId.LobbyViewWindowId);
+		}
+
 		private void Init()
 		{
 			_viewLayersModel.HideAll();
-			_viewLayersModel.ShowViewOnTop(ViewsConfiguration.LoadingViewId);
+			_viewLayersModel.ShowViewOnTop((int) ViewsConfiguration.ViewWindowId.LoadingViewWindowId);
 		}
-
-
+		
 		public enum ApplicationViewStates
 		{
 			Loading,

@@ -2,7 +2,6 @@ using Models.Simulation;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Views.SimulationVIew;
 
 namespace Editor.Tests
 {

@@ -5,7 +5,6 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
-using Views.SimulationVIew;
 
 namespace Editor.Tests.Simulation
 {

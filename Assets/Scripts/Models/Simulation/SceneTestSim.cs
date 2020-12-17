@@ -1,11 +1,11 @@
-#if UNITY_EDITOR //To use it inside unit test without play mode
+
 using UnityEditor.SceneManagement;
-#endif
-using Models.Simulation;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+#if UNITY_EDITOR //To use it inside unit test without play mode
+#endif
 
-namespace Views.SimulationVIew
+namespace Models.Simulation
 {
 	public class PhysicsSceneSimulation : IPhysicsSceneSimulation
 	{
