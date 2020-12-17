@@ -1,4 +1,3 @@
-
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,6 +12,8 @@ namespace Models.Simulation
 		private Scene _scene;
 		private PhysicsScene _physics;
 
+		public Transform RootTransform { get; }
+		
 		public PhysicsSceneSimulation(string sceneName)
 		{
 			_sceneName = sceneName;
@@ -48,7 +49,5 @@ namespace Models.Simulation
 			
 			_physics.Simulate(deltaTime);
 		}
-
-		public Transform RootTransform { get; }
 	}
 }

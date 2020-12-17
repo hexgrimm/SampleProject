@@ -10,8 +10,9 @@ namespace Models.ApplicationViewModel
 	{
 		private readonly IMetaModel _metaModel;
 		private readonly ITimeModel _timeModel;
-		private readonly IViewLayersModel _viewLayersModel;
+		private readonly ILayersModel _layersModel;
 		private readonly ISimulationModel _simulationModel;
+		private readonly IAssetsModel _assetsModel;
 		private readonly IUpdateWatcher _updateWatcher;
 
 		private bool _isInitialized = false;
@@ -35,19 +36,20 @@ namespace Models.ApplicationViewModel
 
 		public ISignalSource<int> ExchangeCoinsToCrystals => _exchangeCoinsToCrystals;
 
-		public ISignal LayersChanged => _viewLayersModel.LayersChanged;
+		public ISignal LayersChanged => _layersModel.LayersChanged;
 
 		public ISignal<bool> GameRunning => _gameRunning;
 
-		public IReadOnlyList<int> Layers => _viewLayersModel.Layers;
+		public IReadOnlyList<int> Layers => _layersModel.Layers;
 		
-		public ApplicationModel(IMetaModel metaModel, ITimeModel timeModel, IViewLayersModel viewLayersModel,
-			ISimulationModel simulationModel, IUpdateWatcher updateWatcher)
+		public ApplicationModel(IMetaModel metaModel, ITimeModel timeModel, ILayersModel layersModel,
+			ISimulationModel simulationModel, IAssetsModel assetsModel, IUpdateWatcher updateWatcher)
 		{
 			_metaModel = metaModel;
 			_timeModel = timeModel;
-			_viewLayersModel = viewLayersModel;
+			_layersModel = layersModel;
 			_simulationModel = simulationModel;
+			_assetsModel = assetsModel;
 			_updateWatcher = updateWatcher;
 			_currentState = ApplicationViewStates.Loading;
 		}
@@ -63,7 +65,8 @@ namespace Models.ApplicationViewModel
 			_updateWatcher.RegisterUpdate();
 			
 			_timeModel.Update();
-			_viewLayersModel.Update();
+			_layersModel.Update();
+			_assetsModel.Update();
 			_simulationModel.Update(_timeModel.DeltaTime);
 			
 			
@@ -102,13 +105,21 @@ namespace Models.ApplicationViewModel
 			if (!_metaModel.IsConnected && !_discPopupShown)
 			{
 				_discPopupShown = true;
-				_viewLayersModel.ShowViewOnTop((int) ViewsConfiguration.ViewWindowId.DisconnectedPopUpViewId);
+				_layersModel.ShowViewOnTop((int) ViewsConfiguration.ViewWindowId.DisconnectedPopUpViewId);
 			}
 
 			if (_metaModel.IsConnected && _discPopupShown)
 			{
 				_discPopupShown = false;
-				_viewLayersModel.HideView((int) ViewsConfiguration.ViewWindowId.DisconnectedPopUpViewId);
+				_layersModel.HideView((int) ViewsConfiguration.ViewWindowId.DisconnectedPopUpViewId);
+			}
+
+			if (_requestMoreCoins.Get)
+			{
+				if (_metaModel.IsConnected && !_discPopupShown)
+				{
+					_metaModel.RequestMoreCoins();
+				}
 			}
 
 			if (_startNewGame.Get)
@@ -134,15 +145,15 @@ namespace Models.ApplicationViewModel
 		private void TransitFromLoadingToLobby()
 		{
 			_currentState = ApplicationViewStates.Lobby;
-			_viewLayersModel.HideAll();
-			_viewLayersModel.ShowViewOnTop((int) ViewsConfiguration.ViewWindowId.LobbyViewWindowId);
+			_layersModel.HideAll();
+			_layersModel.ShowViewOnTop((int) ViewsConfiguration.ViewWindowId.LobbyViewWindowId);
 		}
 		
 		private void TransitFromLobbyToGame()
 		{
 			_currentState = ApplicationViewStates.Game;
-			_viewLayersModel.HideAll();
-			_viewLayersModel.ShowViewOnTop((int) ViewsConfiguration.ViewWindowId.GameViewWindowId);
+			_layersModel.HideAll();
+			_layersModel.ShowViewOnTop((int) ViewsConfiguration.ViewWindowId.GameViewWindowId);
 			
 			_gameRunning.Raise(true);
 			
@@ -157,14 +168,14 @@ namespace Models.ApplicationViewModel
 			_simulationModel.Hide();
 			_simulationModel.DestroyInstanceForUnload();
 			
-			_viewLayersModel.HideAll();
-			_viewLayersModel.ShowViewOnTop((int) ViewsConfiguration.ViewWindowId.LobbyViewWindowId);
+			_layersModel.HideAll();
+			_layersModel.ShowViewOnTop((int) ViewsConfiguration.ViewWindowId.LobbyViewWindowId);
 		}
 
 		private void Init()
 		{
-			_viewLayersModel.HideAll();
-			_viewLayersModel.ShowViewOnTop((int) ViewsConfiguration.ViewWindowId.LoadingViewWindowId);
+			_layersModel.HideAll();
+			_layersModel.ShowViewOnTop((int) ViewsConfiguration.ViewWindowId.LoadingViewWindowId);
 		}
 		
 		public enum ApplicationViewStates

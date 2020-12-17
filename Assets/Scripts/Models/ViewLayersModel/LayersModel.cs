@@ -3,7 +3,7 @@ using EventUtils;
 
 namespace Models.ViewLayersModel
 {
-	public class ViewLayersModel : IViewLayersModel
+	public class LayersModel : ILayersModel
 	{
 		private readonly IUpdateWatcher _updateWatcher;
 		private readonly List<int> _layers = new List<int>();
@@ -13,7 +13,7 @@ namespace Models.ViewLayersModel
 
 		public IReadOnlyList<int> Layers => _layers;
 
-		public ViewLayersModel(IUpdateWatcher updateWatcher)
+		public LayersModel(IUpdateWatcher updateWatcher)
 		{
 			_updateWatcher = updateWatcher;
 		}
