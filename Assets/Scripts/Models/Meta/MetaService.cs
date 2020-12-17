@@ -5,18 +5,20 @@ namespace Models.Meta
 	public class MetaService : IMetaService, IUpdateable
 	{
 		private readonly ITimeModel _timeModel;
+		private readonly IUpdateWatcher _updateWatcher;
 		private float? _emulateConnectDelay;
 		private readonly bool _emulateDisconnects;
 
 		public bool IsConnected { get; private set; } = false;
 
-		private float _initTime;
-		private float _nextDiscTime;
+		private readonly float _initTime;
+		private readonly float _nextDiscTime;
 		private float _discDuration = 2f;
 		
-		public MetaService(ITimeModel timeModel, float? emulateConnectDelay = null, bool emulateDisconnects = false)
+		public MetaService(ITimeModel timeModel, IUpdateWatcher updateWatcher, float? emulateConnectDelay = null, bool emulateDisconnects = false)
 		{
 			_timeModel = timeModel;
+			_updateWatcher = updateWatcher;
 			_emulateConnectDelay = emulateConnectDelay;
 			_emulateDisconnects = emulateDisconnects;
 			_initTime = _timeModel.RealTimeSinceStartup;
@@ -27,6 +29,8 @@ namespace Models.Meta
 		
 		public void Update()
 		{
+			_updateWatcher.RegisterUpdate();
+			
 			if (_emulateConnectDelay.HasValue)
 			{
 				if (_initTime + _emulateConnectDelay.Value < _timeModel.RealTimeSinceStartup)

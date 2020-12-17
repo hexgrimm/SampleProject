@@ -3,7 +3,7 @@ using EventUtils;
 
 namespace Models.ViewLayersModel
 {
-	public interface IViewLayersModel
+	public interface IViewLayersModel : IUpdateable
 	{
 		ISignal LayersChanged { get; }
 		IReadOnlyList<int> Layers { get; }

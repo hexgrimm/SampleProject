@@ -2,7 +2,7 @@ using EventUtils;
 
 namespace Models
 {
-	public interface IMetaModel
+	public interface IMetaModel : IUpdateable
 	{
 		int Coins { get; }
 		int Crystals { get; }

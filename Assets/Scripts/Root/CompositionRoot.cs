@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using Models;
 using Models.ApplicationViewModel;
+using Models.AssetsManagement;
 using Models.Meta;
+using Models.Simulation;
 using Models.ViewLayersModel;
 using Presenters;
 using UnityEngine;
 using Views;
-using Time = Models.Time;
 
 namespace Root
 {
@@ -15,9 +16,8 @@ namespace Root
 	{
 		public event Action UpdateEvent = () => { };
 		
-		//just for example. This can be injected as resource database or smth to views directly.
-		public GameObject LoadingPrefab;
-		public GameObject LobbyPrefab;
+		public AssetLinks AssetLinks;
+		
 		public Transform UiRoot;
 
 		void Start()
@@ -27,33 +27,33 @@ namespace Root
 
 		private void BuildCodeTree()
 		{
-			List<IUpdateable> models = new List<IUpdateable>();
+			var timeModel = new TimeModel(new UpdateWatcher());
+
+			var metaService = new MetaService(timeModel, new UpdateWatcher(), 2f);
+
+			var metaModel = new MetaModel(timeModel, metaService, new UpdateWatcher());
+
+			var viewLayersModel = new ViewLayersModel(new UpdateWatcher());
+
+			var assetsModel = new AssetsModel(AssetLinks, new UpdateWatcher());
+			var phys = new PhysicsSceneSimulation("Sim1");
+
+			var simModel = new SimulationModel(phys, assetsModel);
 			
-			var timeModel = new Time();
-			models.Add(timeModel);
-
-			var metaService = new MetaService(timeModel, 2);
-			models.Add(metaService);
-
-			var metaModel = new Meta(timeModel, metaService);
-			models.Add(metaModel);
-			
-			var viewLayersModel = new ViewLayersModel();
-			models.Add(viewLayersModel);
-
-			var appViewModel = new ApplicationViewModel(metaModel, timeModel, viewLayersModel);
-			models.Add(appViewModel);
-
+			var applicationModel = new ApplicationModel(metaModel, timeModel, viewLayersModel, simModel, new UpdateWatcher());
 
 			var presenters = new List<IUpdateablePresenter>();
 			
-			var lobbyView = new LobbyView(LobbyPrefab, UiRoot);
-			presenters.Add(new LobbyViewPresenter(lobbyView, appViewModel));
+			var lobbyView = new LobbyView(AssetLinks.LobbyWindowPrefab, UiRoot);
+			presenters.Add(new LobbyViewPresenter(lobbyView, applicationModel));
 			
-			var loadingWindowView = new LoadingView(LoadingPrefab, UiRoot, this);
-			presenters.Add(new LoadingPresenter(loadingWindowView, appViewModel));
+			var loadingWindowView = new LoadingView(AssetLinks.LoadingWindowPrefab, UiRoot, this);
+			presenters.Add(new LoadingPresenter(loadingWindowView, applicationModel));
 			
-			var rootUpdater = new ApplicationLoop(models, presenters, this);
+			var gameWindowView = new GameWindow(AssetLinks.GameWindowPrefab, UiRoot);
+			presenters.Add(new GameWindowPresenter(gameWindowView, applicationModel));
+			
+			var rootUpdater = new ApplicationLoop(applicationModel, presenters, this);
 		}
 
 		private void Update()

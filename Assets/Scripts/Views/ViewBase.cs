@@ -15,7 +15,7 @@ namespace Views
 			_parent = parent;
 		}
 
-		public virtual void Show()
+		protected void Instantiate()
 		{
 			if (GameObjectInstance != null)
 			{

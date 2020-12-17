@@ -25,7 +25,7 @@ namespace Views
 
 		public void ShowOnLayer(int layerIndex)
 		{
-			base.Show();
+			base.Instantiate();
 			GameObjectInstance.transform.SetSiblingIndex(layerIndex);
 		}
 

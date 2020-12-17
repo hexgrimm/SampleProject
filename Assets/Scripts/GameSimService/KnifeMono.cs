@@ -12,14 +12,14 @@ public class KnifeMono : MonoBehaviour
         
     }
 
-    public void FixedUpdate()
+    public void UpdateObject(float physicsDeltaTime)
     {
-        transform.localPosition += transform.localRotation * (MovementVector * Time.fixedDeltaTime);
+        transform.localPosition += transform.localRotation * (MovementVector * physicsDeltaTime);
     }
 
     private void OnCollisionEnter(Collision other)
     {
-
+        
     }
 
     private void OnTriggerEnter(Collider other)
