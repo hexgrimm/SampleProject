@@ -5,13 +5,13 @@ using Views;
 
 namespace Presenters
 {
-	public class LoadingPresenter : IUpdateablePresenter
+	public class LoadingWindowPresenter : IUpdateablePresenter
 	{
 		private readonly ILoadingWindowView _loadingWindowView;
 		private readonly IRootModel _rootModel;
 		private bool _dataTransferEnabled;
 
-		public LoadingPresenter(ILoadingWindowView loadingWindowView, IRootModel rootModel)
+		public LoadingWindowPresenter(ILoadingWindowView loadingWindowView, IRootModel rootModel)
 		{
 			_loadingWindowView = loadingWindowView;
 			_rootModel = rootModel;

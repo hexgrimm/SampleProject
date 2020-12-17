@@ -5,14 +5,14 @@ using Views;
 
 namespace Presenters
 {
-	public class LobbyViewPresenter : IUpdateablePresenter
+	public class LobbyWindowPresenter : IUpdateablePresenter
 	{
 		private readonly ILobbyView _lobbyView;
 		private readonly IRootModel _rootModel;
 
 		private bool _dataTransferEnabled;
 
-		public LobbyViewPresenter(ILobbyView lobbyView, IRootModel rootModel)
+		public LobbyWindowPresenter(ILobbyView lobbyView, IRootModel rootModel)
 		{
 			_lobbyView = lobbyView;
 			_rootModel = rootModel;

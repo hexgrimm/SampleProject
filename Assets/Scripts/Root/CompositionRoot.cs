@@ -10,7 +10,6 @@ using Presenters;
 using Presenters.CoreLoop;
 using UnityEngine;
 using Views;
-using PhysicsScene = Models.Simulation.PhysicsScene;
 
 namespace Root
 {
@@ -37,7 +36,7 @@ namespace Root
 			var viewLayersModel = new LayersModel(new UpdateWatcher("Layers Model"));
 
 			var assetsModel = new AssetsModel(AssetLinks, new UpdateWatcher("Asset Model"));
-			var phys = new PhysicsScene("Sim1");
+			var phys = new Models.Simulation.PhysicsScene("Sim1");
 
 			var simModel = new SimulationModel(phys, assetsModel);
 			
@@ -51,8 +50,8 @@ namespace Root
 			var gameWindowView = new GameWindow(AssetLinks.GameWindowPrefab, UiRoot);
 			
 			//presenters
-			presenters.Add(new LoadingPresenter(loadingWindowView, applicationModel));
-			presenters.Add(new LobbyViewPresenter(lobbyView, applicationModel));
+			presenters.Add(new LoadingWindowPresenter(loadingWindowView, applicationModel));
+			presenters.Add(new LobbyWindowPresenter(lobbyView, applicationModel));
 			presenters.Add(new GameWindowPresenter(gameWindowView, applicationModel));
 			
 			//root
