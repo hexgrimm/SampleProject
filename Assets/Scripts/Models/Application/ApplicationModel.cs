@@ -67,9 +67,8 @@ namespace Models.ApplicationViewModel
 			_timeModel.Update();
 			_layersModel.Update();
 			_assetsModel.Update();
-			_simulationModel.Update(_timeModel.DeltaTime);
-			
-			
+			_simulationModel.Update(_timeModel.RealTimeSinceStartup);
+
 			if (_currentState == ApplicationViewStates.Loading)
 				LoadingUpdate();
 			else if (_currentState == ApplicationViewStates.Lobby)
@@ -158,7 +157,7 @@ namespace Models.ApplicationViewModel
 			_gameRunning.Raise(true);
 			
 			_simulationModel.InstantiatePrefab();
-			_simulationModel.Show();
+			_simulationModel.Show(_timeModel.RealTimeSinceStartup);
 		}
 
 		private void TransitFromGameToLobby()

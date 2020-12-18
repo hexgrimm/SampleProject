@@ -11,6 +11,8 @@ namespace Models.Simulation
 		private GameObject _instance;
 		private SimulationLinks _simulationLinks;
 		private GameObject _prefab;
+		private float _nextBaseTime;
+		private float _prevTimeAddition;
 
 		public SimulationModel(IPhysicsScene physicsScene, IAssetsModel assetsModel)
 		{
@@ -33,8 +35,11 @@ namespace Models.Simulation
 			_instance.SetActive(false);
 		}
 
-		public void Show()
+		public void Show(float startTime)
 		{
+			_nextBaseTime = startTime;
+			_prevTimeAddition = 0;
+			
 			if (_instance != null)
 				_instance.SetActive(true);
 		}
@@ -48,27 +53,29 @@ namespace Models.Simulation
 		public void DestroyInstanceForUnload()
 		{
 			_simulationLinks = null;
+			_prevTimeAddition = 0;
+			
 			GameObject.Destroy(_instance);
 		}
 
-		public void Update(float deltaTime)
+		public void Update(float toTime)
 		{
 			if (_simulationLinks == null)
 				return;
-			
-			const float fixedTime = 0.05f;
 
-			int fullIterations = (int) (deltaTime / fixedTime);
-			float addition = deltaTime - (fullIterations * fixedTime);
+			var delta = toTime - _nextBaseTime + _prevTimeAddition; 
+			
+			const float fixedTime = 0.03f;
+
+			int fullIterations = (int) (delta / fixedTime);
+			_prevTimeAddition =  delta % fixedTime;
+			_nextBaseTime = toTime;
 			
 			for (int i = 0; i < fullIterations; i++)
 			{
 				_simulationLinks.KnifeMono.UpdateObject(fixedTime);
 				_physicsScene.SimulatePhysics(fixedTime);
 			}
-			
-			_simulationLinks.KnifeMono.UpdateObject(addition);
-			_physicsScene.SimulatePhysics(addition);
 		}
 	}
 }

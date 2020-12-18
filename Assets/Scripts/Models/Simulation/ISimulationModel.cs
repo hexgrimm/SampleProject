@@ -3,9 +3,9 @@ namespace Models.Simulation
 	public interface ISimulationModel
 	{
 		void InstantiatePrefab();
-		void Show();
+		void Show(float startTime);
 		void Hide();
 		void DestroyInstanceForUnload();
-		void Update(float deltaTime);
+		void Update(float toTime);
 	}
 }
