@@ -18,7 +18,7 @@ Don't know about each other.
 Can be used without application with temporal code and fake data.
 Have state because Unity directs it, but API as passive as possible.
 
-- Presenters - Stateless entity which purpose is to send commands from view to model, and after model update send data change to view back.
+- Presenters - Stateless entities which purpose is to send commands from view to model, and after model update send data change to view back.
 Don't know about each other. Can use only public Model and View API.
 <h2> Notes </h2>
 
