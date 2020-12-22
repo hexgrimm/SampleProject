@@ -5,9 +5,9 @@ namespace Views
 {
 	public class GameWindow : ViewBase<GameWindowPrefabLinks>, IGameWindow
 	{
-		private readonly Signal _quitGameButton = new Signal();
+		private readonly Flag _quitGameButton = new Flag();
 		
-		public ISignal QuitGameButton => _quitGameButton;
+		public IFlag QuitGameButton => _quitGameButton;
 		
 		public GameWindow(GameObject prefab, Transform parent) : base(prefab, parent)
 		{

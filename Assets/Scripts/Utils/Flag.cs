@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace EventUtils
 {
-	public class Signal : ISignalSource, ISignal
+	public class Flag : IFlagHandle, IFlag
 	{
 		private int _frameOfRaise = -1;
 		
@@ -15,7 +15,7 @@ namespace EventUtils
 		}
 	}
 	
-	public class Signal<T> : ISignalSource<T>, ISignal<T> where T : struct
+	public class Flag<T> : IFlagHandle<T>, IFlag<T> where T : struct
 	{
 		private int _frameOfRaise = -1;
 

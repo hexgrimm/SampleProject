@@ -6,8 +6,8 @@ namespace Models.ApplicationViewModel
 	public interface IRootModel
 	{
 		//Before Update
-		ISignalSource RequestMoreCoins { get; }
-		ISignalSource<int> ExchangeCoinsToCrystals { get; }
+		IFlagHandle RequestMoreCoins { get; }
+		IFlagHandle<int> ExchangeCoinsToCrystals { get; }
 		void StartNewGame();
 		void QuitGame();
 
@@ -17,7 +17,7 @@ namespace Models.ApplicationViewModel
 		float DeltaTime { get; }
 		
 		IReadOnlyList<int> Layers { get; }
-		ISignal LayersChanged { get; }
-		ISignal<bool> GameRunning { get; }
+		IFlag LayersChanged { get; }
+		IFlag<bool> GameRunning { get; }
 	}
 }

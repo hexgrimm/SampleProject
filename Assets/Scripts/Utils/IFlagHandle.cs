@@ -1,10 +1,10 @@
 namespace EventUtils
 {
-	public interface ISignalSource
+	public interface IFlagHandle
 	{
 		void Raise();
 	}
-	public interface ISignalSource<T> where T : struct
+	public interface IFlagHandle<T> where T : struct
 	{
 		void Raise(T value);
 	}

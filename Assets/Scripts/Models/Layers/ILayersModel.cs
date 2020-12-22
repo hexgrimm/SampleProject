@@ -5,7 +5,7 @@ namespace Models.ViewLayersModel
 {
 	public interface ILayersModel : IUpdateable
 	{
-		ISignal LayersChanged { get; }
+		IFlag LayersChanged { get; }
 		IReadOnlyList<int> Layers { get; }
 		
 		void ShowViewOnTop(int viewId);

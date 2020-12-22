@@ -7,9 +7,9 @@ namespace Models.ViewLayersModel
 	{
 		private readonly IUpdateWatcher _updateWatcher;
 		private readonly List<int> _layers = new List<int>();
-		private readonly Signal _layersChanged = new Signal();
+		private readonly Flag _layersChanged = new Flag();
 
-		public ISignal LayersChanged => _layersChanged;
+		public IFlag LayersChanged => _layersChanged;
 
 		public IReadOnlyList<int> Layers => _layers;
 

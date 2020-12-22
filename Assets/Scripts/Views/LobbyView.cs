@@ -5,12 +5,12 @@ namespace Views
 {
 	public class LobbyView : ViewBase<LobbyWindowPrefabLinks>, ILobbyView
 	{
-		private readonly Signal _requestCoinsButton = new Signal();
-		private readonly Signal _startGameButton = new Signal();
+		private readonly Flag _requestCoinsButton = new Flag();
+		private readonly Flag _startGameButton = new Flag();
 
-		public ISignal RequestCoinsButton => _requestCoinsButton;
+		public IFlag RequestCoinsButton => _requestCoinsButton;
 
-		public ISignal StartGameButton => _startGameButton;
+		public IFlag StartGameButton => _startGameButton;
 
 		public LobbyView(GameObject prefab, Transform parent) : base(prefab, parent)
 		{

@@ -1,11 +1,11 @@
 namespace EventUtils
 {
-	public interface ISignal
+	public interface IFlag
 	{
 		bool Get { get; }
 	}
 	
-	public interface ISignal<T> where T : struct
+	public interface IFlag<T> where T : struct
 	{
 		T? Get { get; }
 	}

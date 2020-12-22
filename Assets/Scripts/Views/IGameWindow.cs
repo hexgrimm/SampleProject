@@ -4,7 +4,7 @@ namespace Views
 {
 	public interface IGameWindow
 	{
-		ISignal QuitGameButton { get; }
+		IFlag QuitGameButton { get; }
 		void ShowOnLayer(int layerIndex);
 		void Hide();
 	}

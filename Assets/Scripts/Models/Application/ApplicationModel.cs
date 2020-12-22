@@ -20,25 +20,25 @@ namespace Models.ApplicationViewModel
 		
 		private ApplicationViewStates _currentState;
 		
-		private readonly Signal _requestMoreCoins = new Signal();
+		private readonly Flag _requestMoreCoins = new Flag();
 		
-		private readonly Signal<int> _exchangeCoinsToCrystals = new Signal<int>();
+		private readonly Flag<int> _exchangeCoinsToCrystals = new Flag<int>();
 
-		private readonly Signal _startNewGame = new Signal();
-		private readonly Signal _quitGame = new Signal();
-		private readonly Signal<bool> _gameRunning = new Signal<bool>();
+		private readonly Flag _startNewGame = new Flag();
+		private readonly Flag _quitGame = new Flag();
+		private readonly Flag<bool> _gameRunning = new Flag<bool>();
 
 		public int Coins => _metaModel.Coins;
 		public int Crystals => _metaModel.Crystals;
 		public float DeltaTime => _timeModel.DeltaTime;
 
-		public ISignalSource RequestMoreCoins => _requestMoreCoins;
+		public IFlagHandle RequestMoreCoins => _requestMoreCoins;
 
-		public ISignalSource<int> ExchangeCoinsToCrystals => _exchangeCoinsToCrystals;
+		public IFlagHandle<int> ExchangeCoinsToCrystals => _exchangeCoinsToCrystals;
 
-		public ISignal LayersChanged => _layersModel.LayersChanged;
+		public IFlag LayersChanged => _layersModel.LayersChanged;
 
-		public ISignal<bool> GameRunning => _gameRunning;
+		public IFlag<bool> GameRunning => _gameRunning;
 
 		public IReadOnlyList<int> Layers => _layersModel.Layers;
 		
