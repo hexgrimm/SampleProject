@@ -43,9 +43,9 @@ package "Views"
     class LobbyView 
     interface ILobbyView
     
-    ILobbyView <|-u- LobbyView
-    IGameWindow <|-u- GameWindow
-    ILoadingWindow <|-u- LoadingWindow
+    ILobbyView <|-u. LobbyView
+    IGameWindow <|-u. GameWindow
+    ILoadingWindow <|-u. LoadingWindow
     
     GameWindowPresenter --up--> IGameWindow
     LoadingWindowPresenter --up--> ILoadingWindow
