@@ -1,13 +1,13 @@
-<h2> Sample Project </h2>
+<h1> Sample Project </h1>
 
 In this variant, all presenters work independently, same as views do.
 Models have a dependency tree and execute with a strong order.
 
-<h2> How to look the code </h2>
+<h2> How to </h2>
 Open a scene Sample.scene with Unity 2019.4.15f.<br>
 There will be only one MonoBehaviour component CompositionRoot.cs needed for initialization in Unity Runtime.
 
-<h2> Modules of an application </h2>
+<h2> Modules </h2>
 
 - Models - Virtualise all the data and its behaviour we want to have as model.
 Easy to test. 
