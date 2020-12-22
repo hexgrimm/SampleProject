@@ -1,0 +1,65 @@
+@startuml
+package "Models" 
+{
+    class ApplicationModel implements IApplicationModel
+    class MetaService implements IMetaService
+    class MetaModel implements IMetaModel
+    class SimulationModel implements ISimulationModel
+    class TimeModel implements ITimeModel
+    class AssetsModel implements IAssetsModel
+    class LayersModel implements ILayersModel
+    class PhysicsScene implements IPhysicsScene
+    
+    MetaModel --> IMetaService
+    
+    ApplicationModel --> IMetaModel
+    ApplicationModel --> ISimulationModel
+    ApplicationModel --> ILayersModel
+    ApplicationModel --> IAssetsModel
+    ApplicationModel --> ITimeModel
+    
+    SimulationModel --> IPhysicsScene
+}
+
+package "Presenters" 
+{
+    class GameWindowPresenter
+    class LoadingWindowPresenter
+    class LobbyWindowPresenter
+    
+    GameWindowPresenter --> IApplicationModel
+    LoadingWindowPresenter --> IApplicationModel
+    LobbyWindowPresenter --> IApplicationModel
+}
+
+package "Views" 
+{
+    class LoadingWindow
+    interface ILoadingWindow
+    
+    class GameWindow 
+    interface IGameWindow
+    
+    class LobbyView 
+    interface ILobbyView
+    
+    ILobbyView <|-u- LobbyView
+    IGameWindow <|-u- GameWindow
+    ILoadingWindow <|-u- LoadingWindow
+    
+    GameWindowPresenter --up--> IGameWindow
+    LoadingWindowPresenter --up--> ILoadingWindow
+    LobbyWindowPresenter --up--> ILobbyView
+}
+
+package "Unity Layer"
+{
+    class GameWindowPrefabLinks
+    class LoadingViewPrefabLinks
+    class LobbyWindowPrefabLinks
+    
+    LobbyView -up-> LobbyWindowPrefabLinks
+    GameWindow -up-> GameWindowPrefabLinks
+    LoadingWindow -up-> LoadingViewPrefabLinks
+}
+@enduml

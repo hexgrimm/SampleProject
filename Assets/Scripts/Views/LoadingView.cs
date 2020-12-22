@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Views
 {
-	public class LoadingView : ViewBase<LoadingViewPrefabLinks>, ILoadingWindowView
+	public class LoadingView : ViewBase<LoadingWindowPrefabLinks>, ILoadingWindowView
 	{
 		private Sequence _sequence;
 		

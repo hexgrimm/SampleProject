@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Views
 {
-	public class LoadingViewPrefabLinks : MonoBehaviour
+	public class LoadingWindowPrefabLinks : MonoBehaviour
 	{
 		public GameObject Spinner;
 	}
