@@ -9,8 +9,12 @@ There will be only one MonoBehaviour component CompositionRoot.cs needed for ini
 
 <h2> Notes </h2>
 
-- I implemented a simple alternative to events: <b>IFlag</b> to control the execution flow when it is needed for a subscriber instead of observable object. It also gives consistency of data. I don't need to check consistency of data manually in escape all bugs related to it.
-- In CompositionRoot additional noise creates UpdateWatcher.cs, I add it to every model constructor just to check that every model received one and only one update every frame. 
+- I implemented a simple alternative to events: 
+<b>IFlag</b> to control the execution flow when it is needed for a subscriber instead of an observable object. 
+It also gives consistency of data. 
+I don't need to check consistency of data manually ar expect any bugs related to it.
+- In CompositionRoot UpdateWatcher.cs creates additional noise.
+The reason I add it to every model constructor is just to check that every model received one and only one update every frame. 
 - I moved PhysicsScene to another entity because it needs different implementations to work with all cases:
     - Runtime
     - Editor tests
