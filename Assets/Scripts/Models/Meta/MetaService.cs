@@ -1,4 +1,4 @@
-using Models.Time;
+using Models.Times;
 using UnityEngine;
 
 namespace Models.Meta

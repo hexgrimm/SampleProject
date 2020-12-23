@@ -1,4 +1,4 @@
-namespace Models.Time
+namespace Models.Times
 {
 	public class TimeModel : ITimeModel
 	{

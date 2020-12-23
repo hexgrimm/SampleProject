@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Models.Time;
+using Models.Times;
 using Utils;
 
 namespace Models.Meta
