@@ -16,7 +16,7 @@ namespace Root
 {
 	public class CompositionRoot : MonoBehaviour
 	{
-		public AssetLinks AssetLinks;
+		public AssetsConfiguration AssetsConfiguration;
 		public Transform UiRoot;
 		private ApplicationLoop _rootLoop;
 
@@ -36,7 +36,7 @@ namespace Root
 
 			var viewLayersModel = new LayersModel(new UpdateWatcher("Layers Model"));
 
-			var assetsModel = new AssetsModel(AssetLinks, new UpdateWatcher("Asset Model"));
+			var assetsModel = new AssetsModel(AssetsConfiguration, new UpdateWatcher("Asset Model"));
 			var phys = new Models.Simulation.PhysicsScene("Sim1");
 
 			var simModel = new SimulationModel(phys, assetsModel);
@@ -46,9 +46,9 @@ namespace Root
 			var presenters = new List<IUpdateablePresenter>();
 			
 			//views
-			var lobbyView = new LobbyView(AssetLinks.LobbyWindowPrefab, UiRoot);
-			var loadingWindowView = new LoadingView(AssetLinks.LoadingWindowPrefab, UiRoot);
-			var gameWindowView = new GameWindow(AssetLinks.GameWindowPrefab, UiRoot);
+			var lobbyView = new LobbyView(AssetsConfiguration.LobbyWindowPrefab, UiRoot);
+			var loadingWindowView = new LoadingView(AssetsConfiguration.LoadingWindowPrefab, UiRoot);
+			var gameWindowView = new GameWindow(AssetsConfiguration.GameWindowPrefab, UiRoot);
 			
 			//presenters
 			presenters.Add(new LoadingWindowPresenter(loadingWindowView, applicationModel));

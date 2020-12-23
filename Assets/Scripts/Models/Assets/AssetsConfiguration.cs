@@ -1,17 +1,13 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Models.Assets
 {
 	[CreateAssetMenu(fileName = @"Assets\ResourceLinks.asset")]
-	public class AssetLinks : ScriptableObject
+	public class AssetsConfiguration : ScriptableObject
 	{
-		public GameObject LoadingWindowPrefab;
-		public GameObject LobbyWindowPrefab;
-		public GameObject GameWindowPrefab;
-		
-		[Header("Resource Links:")]
-		public ResourceLink SimulationPrefabLink;
+		public ResourceIdLinkPair[] Resources;
 	}
 
 	[Serializable]
@@ -21,9 +17,10 @@ namespace Models.Assets
 		public string Id;
 	}
 
+	[Serializable]
 	public class ResourceIdLinkPair
 	{
-		public ResourcesConfiguration.ViewResourceId ViewId;
+		public ResourcesConfiguration.ResourceId Id;
 		public ResourceLink ResourceLink;
 	}
 }

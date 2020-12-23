@@ -108,13 +108,13 @@ namespace Models.App
 			if (!_metaModel.IsConnected && !_discPopupShown)
 			{
 				_discPopupShown = true;
-				_layersModel.ShowViewOnTop((int) ViewResourceId.DisconnectedPopUpViewId);
+				_layersModel.ShowViewOnTop((int) ResourceId.DisconnectedPopUp);
 			}
 
 			if (_metaModel.IsConnected && _discPopupShown)
 			{
 				_discPopupShown = false;
-				_layersModel.HideView((int) ViewResourceId.DisconnectedPopUpViewId);
+				_layersModel.HideView((int) ResourceId.DisconnectedPopUp);
 			}
 
 			if (_requestMoreCoins.Get)
@@ -149,14 +149,14 @@ namespace Models.App
 		{
 			_currentState = ApplicationViewStates.Lobby;
 			_layersModel.HideAll();
-			_layersModel.ShowViewOnTop((int) ViewResourceId.LobbyViewWindowId);
+			_layersModel.ShowViewOnTop((int) ResourceId.LobbyWindow);
 		}
 		
 		private void TransitFromLobbyToGame()
 		{
 			_currentState = ApplicationViewStates.Game;
 			_layersModel.HideAll();
-			_layersModel.ShowViewOnTop((int) ViewResourceId.GameViewWindowId);
+			_layersModel.ShowViewOnTop((int) ResourceId.GameWindow);
 			
 			_gameRunning.Raise(true);
 			
@@ -169,16 +169,16 @@ namespace Models.App
 			_currentState = ApplicationViewStates.Lobby;
 			
 			_simulationModel.Hide();
-			_simulationModel.DestroyInstanceForUnload();
+			_simulationModel.DestroyInstance();
 			
 			_layersModel.HideAll();
-			_layersModel.ShowViewOnTop((int) ViewResourceId.LobbyViewWindowId);
+			_layersModel.ShowViewOnTop((int) ResourceId.LobbyWindow);
 		}
 
 		private void Init()
 		{
 			_layersModel.HideAll();
-			_layersModel.ShowViewOnTop((int) ViewResourceId.LoadingViewWindowId);
+			_layersModel.ShowViewOnTop((int) ResourceId.LoadingWindow);
 		}
 		
 		public enum ApplicationViewStates

@@ -9,12 +9,12 @@ namespace Models.Assets
 	public class AssetsModel : IAssetsModel
 	{
 		private readonly IUpdateWatcher _updateWatcher;
-		public AssetLinks Links { get; }
+		public AssetsConfiguration Links { get; }
 
-		public AssetsModel(AssetLinks assetLinks, IUpdateWatcher updateWatcher)
+		public AssetsModel(AssetsConfiguration assetsConfiguration, IUpdateWatcher updateWatcher)
 		{
 			_updateWatcher = updateWatcher;
-			Links = assetLinks;
+			Links = assetsConfiguration;
 		}
 
 		public GameObject LoadAsset(string id)

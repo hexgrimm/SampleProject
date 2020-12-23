@@ -25,7 +25,7 @@ namespace Tests.Simulation
 		{
 			//yield return new EnterPlayMode();
 
-			_simModel = new SimulationModel(_physicsSceneSym, new AssetsModel(new AssetLinks(), new UpdateWatcher("test")));
+			_simModel = new SimulationModel(_physicsSceneSym, new AssetsModel(new AssetsConfiguration(), new UpdateWatcher("test")));
 			yield return new WaitForEndOfFrame();
 			
 			_simModel.InstantiatePrefab();
@@ -37,7 +37,7 @@ namespace Tests.Simulation
 
 			yield return new WaitForSeconds(2.5f);
 			
-			_simModel.DestroyInstanceForUnload();
+			_simModel.DestroyInstance();
 			//yield return new ExitPlayMode();
 		}
 		

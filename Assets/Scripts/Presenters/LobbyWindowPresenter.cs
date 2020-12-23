@@ -49,7 +49,7 @@ namespace Presenters
 			for (int i = 0; i < _applicationModel.Layers.Count; i++)
 			{
 				var item = _applicationModel.Layers[i];
-				if (item == (int) ResourcesConfiguration.ViewResourceId.LobbyViewWindowId)
+				if (item == (int) ResourcesConfiguration.ResourceId.LobbyWindow)
 				{
 					_lobbyView.ShowOnLayer(i);
 					_dataTransferEnabled = true;

@@ -2,12 +2,13 @@ namespace Models
 {
 	public static class ResourcesConfiguration
 	{
-		public enum ViewResourceId
+		public enum ResourceId
 		{
-			LoadingViewWindowId = 0,
-			LobbyViewWindowId = 1,
-			DisconnectedPopUpViewId = 2,
-			GameViewWindowId = 3,
+			LoadingWindow = 0,
+			LobbyWindow = 1,
+			DisconnectedPopUp = 2,
+			GameWindow = 3,
+			SimulationPrefab = 4,
 		}
 	}
 }

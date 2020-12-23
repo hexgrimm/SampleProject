@@ -4,7 +4,7 @@ namespace Models.Assets
 {
 	public interface IAssetsModel: IUpdateable
 	{
-		AssetLinks Links { get; }
+		AssetsConfiguration Links { get; }
 		GameObject LoadAsset(string id);
 	}
 }

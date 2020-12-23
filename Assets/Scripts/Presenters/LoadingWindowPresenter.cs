@@ -41,7 +41,7 @@ namespace Presenters
 			for (int i = 0; i < _applicationModel.Layers.Count; i++)
 			{
 				var item = _applicationModel.Layers[i];
-				if (item == (int) ResourcesConfiguration.ViewResourceId.LoadingViewWindowId)
+				if (item == (int) ResourcesConfiguration.ResourceId.LoadingWindow)
 				{
 					_loadingWindowView.ShowOnLayer(i);
 					_dataTransferEnabled = true;

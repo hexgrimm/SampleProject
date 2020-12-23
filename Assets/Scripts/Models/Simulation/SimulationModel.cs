@@ -10,7 +10,6 @@ namespace Models.Simulation
 
 		private GameObject _instance;
 		private SimulationLinks _simulationLinks;
-		private GameObject _prefab;
 		private float _nextBaseTime;
 		private float _prevTimeAddition;
 
@@ -20,17 +19,15 @@ namespace Models.Simulation
 			_assetsModel = assetsModel;
 		}
 
-		public void InstantiatePrefab()
+		public void InstantiatePrefab(GameObject prefab)
 		{
-			_prefab = _assetsModel.LoadAsset(_assetsModel.Links.SimulationPrefabLink.Id);
-			
 			if (_instance != null)
 			{
 				Object.Destroy(_instance);
 				Debug.LogWarning("Loading prefab duplicate");
 			}
 			
-			_instance = Object.Instantiate(_prefab, _physicsScene.RootTransform);
+			_instance = Object.Instantiate(prefab, _physicsScene.RootTransform);
 			_simulationLinks = _instance.GetComponent<SimulationLinks>();
 			_instance.SetActive(false);
 		}
@@ -50,7 +47,7 @@ namespace Models.Simulation
 				_instance.SetActive(false);
 		}
 
-		public void DestroyInstanceForUnload()
+		public void DestroyInstance()
 		{
 			_simulationLinks = null;
 			_prevTimeAddition = 0;
