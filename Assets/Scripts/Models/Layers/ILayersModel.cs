@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using EventUtils;
+using Utils;
 
-namespace Models.ViewLayersModel
+namespace Models.Layers
 {
 	public interface ILayersModel : IUpdateable
 	{

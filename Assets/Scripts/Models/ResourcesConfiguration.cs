@@ -1,8 +1,8 @@
 namespace Models
 {
-	public class ViewsConfiguration
+	public static class ResourcesConfiguration
 	{
-		public enum ViewWindowId
+		public enum ViewResourceId
 		{
 			LoadingViewWindowId = 0,
 			LobbyViewWindowId = 1,

@@ -1,9 +1,7 @@
 using System;
-using UnityEditor;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
-namespace Models.AssetsManagement
+namespace Models.Assets
 {
 	[CreateAssetMenu(fileName = @"Assets\ResourceLinks.asset")]
 	public class AssetLinks : ScriptableObject
@@ -21,5 +19,11 @@ namespace Models.AssetsManagement
 	{
 		public string PathInAssets;
 		public string Id;
+	}
+
+	public class ResourceIdLinkPair
+	{
+		public ResourcesConfiguration.ViewResourceId ViewId;
+		public ResourceLink ResourceLink;
 	}
 }

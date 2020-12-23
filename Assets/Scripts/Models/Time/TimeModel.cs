@@ -1,6 +1,4 @@
-using UnityEngine;
-
-namespace Models
+namespace Models.Time
 {
 	public class TimeModel : ITimeModel
 	{

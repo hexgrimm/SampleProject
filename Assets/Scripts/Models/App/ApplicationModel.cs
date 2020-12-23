@@ -1,12 +1,16 @@
 using System.Collections.Generic;
-using EventUtils;
+using Models.Assets;
+using Models.Layers;
+using Models.Meta;
 using Models.Simulation;
-using Models.ViewLayersModel;
+using Models.Time;
+using Utils;
+using static Models.ResourcesConfiguration;
 
-namespace Models.ApplicationViewModel
+namespace Models.App
 {
 	//TODO: convert it into a context for a state pattern
-	public class ApplicationModel : IUpdateable, IRootModel
+	public class ApplicationModel : IUpdateable, IApplicationModel
 	{
 		private readonly IMetaModel _metaModel;
 		private readonly ITimeModel _timeModel;
@@ -104,13 +108,13 @@ namespace Models.ApplicationViewModel
 			if (!_metaModel.IsConnected && !_discPopupShown)
 			{
 				_discPopupShown = true;
-				_layersModel.ShowViewOnTop((int) ViewsConfiguration.ViewWindowId.DisconnectedPopUpViewId);
+				_layersModel.ShowViewOnTop((int) ViewResourceId.DisconnectedPopUpViewId);
 			}
 
 			if (_metaModel.IsConnected && _discPopupShown)
 			{
 				_discPopupShown = false;
-				_layersModel.HideView((int) ViewsConfiguration.ViewWindowId.DisconnectedPopUpViewId);
+				_layersModel.HideView((int) ViewResourceId.DisconnectedPopUpViewId);
 			}
 
 			if (_requestMoreCoins.Get)
@@ -145,14 +149,14 @@ namespace Models.ApplicationViewModel
 		{
 			_currentState = ApplicationViewStates.Lobby;
 			_layersModel.HideAll();
-			_layersModel.ShowViewOnTop((int) ViewsConfiguration.ViewWindowId.LobbyViewWindowId);
+			_layersModel.ShowViewOnTop((int) ViewResourceId.LobbyViewWindowId);
 		}
 		
 		private void TransitFromLobbyToGame()
 		{
 			_currentState = ApplicationViewStates.Game;
 			_layersModel.HideAll();
-			_layersModel.ShowViewOnTop((int) ViewsConfiguration.ViewWindowId.GameViewWindowId);
+			_layersModel.ShowViewOnTop((int) ViewResourceId.GameViewWindowId);
 			
 			_gameRunning.Raise(true);
 			
@@ -168,13 +172,13 @@ namespace Models.ApplicationViewModel
 			_simulationModel.DestroyInstanceForUnload();
 			
 			_layersModel.HideAll();
-			_layersModel.ShowViewOnTop((int) ViewsConfiguration.ViewWindowId.LobbyViewWindowId);
+			_layersModel.ShowViewOnTop((int) ViewResourceId.LobbyViewWindowId);
 		}
 
 		private void Init()
 		{
 			_layersModel.HideAll();
-			_layersModel.ShowViewOnTop((int) ViewsConfiguration.ViewWindowId.LoadingViewWindowId);
+			_layersModel.ShowViewOnTop((int) ViewResourceId.LoadingViewWindowId);
 		}
 		
 		public enum ApplicationViewStates

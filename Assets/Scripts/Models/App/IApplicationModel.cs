@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using EventUtils;
+using Utils;
 
-namespace Models.ApplicationViewModel
+namespace Models.App
 {
-	public interface IRootModel
+	public interface IApplicationModel
 	{
 		//Before Update
 		IFlagHandle RequestMoreCoins { get; }

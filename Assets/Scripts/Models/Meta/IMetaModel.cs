@@ -1,6 +1,6 @@
-using EventUtils;
+using Utils;
 
-namespace Models
+namespace Models.Meta
 {
 	public interface IMetaModel : IUpdateable
 	{

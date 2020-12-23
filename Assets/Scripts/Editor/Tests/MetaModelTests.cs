@@ -1,5 +1,6 @@
 using Models;
 using Models.Meta;
+using Models.Time;
 using NSubstitute;
 using NUnit.Framework;
 

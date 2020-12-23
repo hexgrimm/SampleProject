@@ -1,5 +1,5 @@
 using Models;
-using Models.ApplicationViewModel;
+using Models.App;
 using Presenters.CoreLoop;
 using Views;
 
@@ -8,13 +8,13 @@ namespace Presenters
 	public class LoadingWindowPresenter : IUpdateablePresenter
 	{
 		private readonly ILoadingWindowView _loadingWindowView;
-		private readonly IRootModel _rootModel;
+		private readonly IApplicationModel _applicationModel;
 		private bool _dataTransferEnabled;
 
-		public LoadingWindowPresenter(ILoadingWindowView loadingWindowView, IRootModel rootModel)
+		public LoadingWindowPresenter(ILoadingWindowView loadingWindowView, IApplicationModel applicationModel)
 		{
 			_loadingWindowView = loadingWindowView;
-			_rootModel = rootModel;
+			_applicationModel = applicationModel;
 		}
 		
 		public void PreModelUpdate()
@@ -24,7 +24,7 @@ namespace Presenters
 
 		public void PostModelUpdate()
 		{
-			if (_rootModel.LayersChanged.Get)
+			if (_applicationModel.LayersChanged.Get)
 			{
 				UpdateViewState();
 			}
@@ -38,10 +38,10 @@ namespace Presenters
 
 		private void UpdateViewState()
 		{
-			for (int i = 0; i < _rootModel.Layers.Count; i++)
+			for (int i = 0; i < _applicationModel.Layers.Count; i++)
 			{
-				var item = _rootModel.Layers[i];
-				if (item == (int) ViewsConfiguration.ViewWindowId.LoadingViewWindowId)
+				var item = _applicationModel.Layers[i];
+				if (item == (int) ResourcesConfiguration.ViewResourceId.LoadingViewWindowId)
 				{
 					_loadingWindowView.ShowOnLayer(i);
 					_dataTransferEnabled = true;

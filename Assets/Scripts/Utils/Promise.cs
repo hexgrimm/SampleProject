@@ -1,6 +1,4 @@
-using Models;
-
-namespace EventUtils
+namespace Utils
 {
 	public class Promise : IPromise
 	{

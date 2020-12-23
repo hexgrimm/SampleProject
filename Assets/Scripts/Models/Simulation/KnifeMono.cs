@@ -1,34 +1,36 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class KnifeMono : MonoBehaviour
+namespace Models.Simulation
 {
-    private const string BrickTag = "brick";
+    public class KnifeMono : MonoBehaviour
+    {
+        private const string BrickTag = "brick";
     
-    public Vector3 MovementVector = Vector3.zero;
+        public Vector3 MovementVector = Vector3.zero;
     
-    void Start()
-    {
-        
-    }
-
-    public void UpdateObject(float physicsDeltaTime)
-    {
-        transform.localPosition += transform.localRotation * (MovementVector * physicsDeltaTime);
-    }
-
-    private void OnCollisionEnter(Collision other)
-    {
-        
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag(BrickTag))
+        void Start()
         {
-            var rb = other.GetComponent<Rigidbody>();
-            if (rb != null)
-                rb.isKinematic = false;
+        
+        }
+
+        public void UpdateObject(float physicsDeltaTime)
+        {
+            transform.localPosition += transform.localRotation * (MovementVector * physicsDeltaTime);
+        }
+
+        private void OnCollisionEnter(Collision other)
+        {
+        
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.CompareTag(BrickTag))
+            {
+                var rb = other.GetComponent<Rigidbody>();
+                if (rb != null)
+                    rb.isKinematic = false;
+            }
         }
     }
 }

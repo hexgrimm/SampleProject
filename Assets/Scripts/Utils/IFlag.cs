@@ -1,4 +1,4 @@
-namespace EventUtils
+namespace Utils
 {
 	public interface IFlag
 	{

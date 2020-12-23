@@ -1,15 +1,12 @@
 using System.Collections;
 using Models;
-using Models.AssetsManagement;
+using Models.Assets;
 using Models.Simulation;
-using NUnit.Framework;
-using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 using PhysicsScene = Models.Simulation.PhysicsScene;
 
-namespace Editor.Tests.Simulation
+namespace Tests.Simulation
 {
 	public class SimulationPlayModeTests
 	{

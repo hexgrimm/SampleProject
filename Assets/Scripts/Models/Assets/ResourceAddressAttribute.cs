@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Models.AssetsManagement
+namespace Models.Assets
 {
 	[AttributeUsage(AttributeTargets.Field)]
 	public class ResourceAddressAttribute : PropertyAttribute

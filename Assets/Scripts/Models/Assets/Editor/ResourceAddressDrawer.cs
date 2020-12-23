@@ -1,9 +1,8 @@
-using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace Models.AssetsManagement.Editor
+namespace Models.Assets.Editor
 {
 	[CustomPropertyDrawer(typeof(ResourceLink))]
 	public class ResourceAddressDrawer : PropertyDrawer

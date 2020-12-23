@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-namespace EventUtils
+namespace Utils
 {
 	public class Flag : IFlagHandle, IFlag
 	{

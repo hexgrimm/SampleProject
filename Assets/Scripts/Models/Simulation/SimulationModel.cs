@@ -1,4 +1,4 @@
-﻿using GameSimService;
+﻿using Models.Assets;
 using UnityEngine;
 
 namespace Models.Simulation

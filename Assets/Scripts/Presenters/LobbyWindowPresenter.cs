@@ -1,5 +1,5 @@
 using Models;
-using Models.ApplicationViewModel;
+using Models.App;
 using Presenters.CoreLoop;
 using Views;
 
@@ -8,31 +8,31 @@ namespace Presenters
 	public class LobbyWindowPresenter : IUpdateablePresenter
 	{
 		private readonly ILobbyView _lobbyView;
-		private readonly IRootModel _rootModel;
+		private readonly IApplicationModel _applicationModel;
 
 		private bool _dataTransferEnabled;
 
-		public LobbyWindowPresenter(ILobbyView lobbyView, IRootModel rootModel)
+		public LobbyWindowPresenter(ILobbyView lobbyView, IApplicationModel applicationModel)
 		{
 			_lobbyView = lobbyView;
-			_rootModel = rootModel;
+			_applicationModel = applicationModel;
 		}
 
 		public void PreModelUpdate()
 		{
 			if (_lobbyView.RequestCoinsButton.Get)
 			{
-				_rootModel.RequestMoreCoins.Raise();
+				_applicationModel.RequestMoreCoins.Raise();
 			}
 			else if (_lobbyView.StartGameButton.Get)
 			{
-				_rootModel.StartNewGame();
+				_applicationModel.StartNewGame();
 			}
 		}
 
 		public void PostModelUpdate()
 		{
-			if (_rootModel.LayersChanged.Get)
+			if (_applicationModel.LayersChanged.Get)
 			{
 				UpdateViewState();
 			}
@@ -40,16 +40,16 @@ namespace Presenters
 			if (!_dataTransferEnabled)
 				return;
 			
-			_lobbyView.SetDeltaTimeValue(_rootModel.DeltaTime);
-			_lobbyView.SetCoinsValue(_rootModel.Coins);
+			_lobbyView.SetDeltaTimeValue(_applicationModel.DeltaTime);
+			_lobbyView.SetCoinsValue(_applicationModel.Coins);
 		}
 
 		private void UpdateViewState()
 		{
-			for (int i = 0; i < _rootModel.Layers.Count; i++)
+			for (int i = 0; i < _applicationModel.Layers.Count; i++)
 			{
-				var item = _rootModel.Layers[i];
-				if (item == (int) ViewsConfiguration.ViewWindowId.LobbyViewWindowId)
+				var item = _applicationModel.Layers[i];
+				if (item == (int) ResourcesConfiguration.ViewResourceId.LobbyViewWindowId)
 				{
 					_lobbyView.ShowOnLayer(i);
 					_dataTransferEnabled = true;

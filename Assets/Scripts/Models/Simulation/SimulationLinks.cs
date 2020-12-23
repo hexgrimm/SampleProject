@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameSimService
+namespace Models.Simulation
 {
 	public class SimulationLinks : MonoBehaviour
 	{

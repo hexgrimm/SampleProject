@@ -1,5 +1,5 @@
 using Models;
-using Models.ApplicationViewModel;
+using Models.App;
 using Presenters.CoreLoop;
 using Views;
 
@@ -7,24 +7,24 @@ namespace Presenters
 {
 	public class GameWindowPresenter : IUpdateablePresenter
 	{
-		private readonly IRootModel _rootModel;
+		private readonly IApplicationModel _applicationModel;
 		private readonly IGameWindow _gameWindow;
 
-		public GameWindowPresenter(IGameWindow gameWindow, IRootModel rootModel)
+		public GameWindowPresenter(IGameWindow gameWindow, IApplicationModel applicationModel)
 		{
-			_rootModel = rootModel;
+			_applicationModel = applicationModel;
 			_gameWindow = gameWindow;
 		}
 		
 		public void PreModelUpdate()
 		{
 			if (_gameWindow.QuitGameButton.Get)
-				_rootModel.QuitGame();
+				_applicationModel.QuitGame();
 		}
 
 		public void PostModelUpdate()
 		{
-			if (_rootModel.LayersChanged.Get)
+			if (_applicationModel.LayersChanged.Get)
 			{
 				UpdateViewState();
 			}
@@ -32,10 +32,10 @@ namespace Presenters
 
 		private void UpdateViewState()
 		{
-			for (int i = 0; i < _rootModel.Layers.Count; i++)
+			for (int i = 0; i < _applicationModel.Layers.Count; i++)
 			{
-				var item = _rootModel.Layers[i];
-				if (item == (int) ViewsConfiguration.ViewWindowId.GameViewWindowId)
+				var item = _applicationModel.Layers[i];
+				if (item == (int) ResourcesConfiguration.ViewResourceId.GameViewWindowId)
 				{
 					_gameWindow.ShowOnLayer(i);
 					return;

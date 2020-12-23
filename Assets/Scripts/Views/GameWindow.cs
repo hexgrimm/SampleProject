@@ -1,5 +1,5 @@
-using EventUtils;
 using UnityEngine;
+using Utils;
 
 namespace Views
 {

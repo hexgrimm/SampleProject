@@ -1,7 +1,6 @@
-using Models.AssetsManagement;
 using UnityEngine;
 
-namespace Models
+namespace Models.Assets
 {
 	public interface IAssetsModel: IUpdateable
 	{
