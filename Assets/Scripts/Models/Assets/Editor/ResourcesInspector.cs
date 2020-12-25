@@ -1,4 +1,5 @@
 using UnityEditor;
+using UnityEngine;
 
 namespace Models.Assets.Editor
 {
@@ -8,33 +9,21 @@ namespace Models.Assets.Editor
 		public override void OnInspectorGUI()
 		{
 			
-			//base.OnInspectorGUI();
+			base.OnInspectorGUI();
 			
 			var config = (AssetsConfiguration)target;
-			
-			SerializedObject serializedObject = new UnityEditor.SerializedObject(config);
-			
-			SerializedProperty serializedPropertyArray = serializedObject.FindProperty("Resources");
 
-			if (serializedPropertyArray == null)
+			foreach (var resourceIdLinkPair in config.Resources)
 			{
-				UnityEditor.EditorGUILayout.LabelField("NULL");
-				return;
-			}
-			
-			var size = serializedPropertyArray.arraySize;
-			for (int i = 0; i < size; i++)
-			{
-				var element = serializedPropertyArray.GetArrayElementAtIndex(i).objectReferenceValue as ResourceIdLinkPair;
-				
-				UnityEditor.EditorGUILayout.LabelField(element.propertyType.ToString());
-				UnityEditor.EditorGUILayout.LabelField(element.name.ToString());
-
-				var objectOfArray = element.GetEndProperty();
-
-				UnityEditor.EditorGUILayout.LabelField(objectOfArray.propertyType.ToString());
-				UnityEditor.EditorGUILayout.LabelField(objectOfArray.name.ToString());
-				//EditorGUILayout.PropertyField(p2);
+				if (resourceIdLinkPair.ResourceType == ResourceType.Bundled)
+				{
+					resourceIdLinkPair.ResourceLink.DirectLink = null;
+				}
+				else
+				{
+					resourceIdLinkPair.ResourceLink.DirectLink =
+						AssetDatabase.LoadAssetAtPath<GameObject>(resourceIdLinkPair.ResourceLink.PathInAssets);
+				}
 			}
 		}
 	}

@@ -16,20 +16,25 @@ MonoBehaviour:
   - ResourceType: 0
     ResourceId: 1
     ResourceLink:
+      DirectLink: {fileID: 3516491796247164717, guid: 22dd6543fca3d8946989cef5cab9cad3,
+        type: 3}
       PathInAssets: Assets/Prefabs/LoadingWindow.prefab
       FileName: loadingwindow
   - ResourceType: 1
     ResourceId: 2
     ResourceLink:
+      DirectLink: {fileID: 0}
       PathInAssets: Assets/Prefabs/LobbyWindow.prefab
       FileName: lobbywindow
   - ResourceType: 1
     ResourceId: 3
     ResourceLink:
+      DirectLink: {fileID: 0}
       PathInAssets: Assets/Prefabs/GameWindow.prefab
       FileName: gamewindow
   - ResourceType: 1
     ResourceId: 4
     ResourceLink:
+      DirectLink: {fileID: 0}
       PathInAssets: Assets/Prefabs/SimulationPrefab.prefab
       FileName: simulationprefab
