@@ -23,7 +23,7 @@ namespace Presenters
 		{
 			if (_lobbyView.RequestCoinsButton.Get)
 			{
-				_applicationModel.RequestMoreCoins.Raise();
+				_applicationModel.RequestMoreCoins();
 			}
 			else if (_lobbyView.StartGameButton.Get)
 			{

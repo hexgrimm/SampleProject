@@ -3,11 +3,11 @@ using Common;
 
 namespace Models.App
 {
-	public interface IApplicationModel
+	public interface IApplicationModel : IUpdateable
 	{
 		//Before Update
-		IFlagHandle RequestMoreCoins { get; }
-		IFlagHandle<int> ExchangeCoinsToCrystals { get; }
+		void RequestMoreCoins();
+		void ExchangeCoinsToCrystals(int amount);
 		void StartNewGame();
 		void QuitGame();
 

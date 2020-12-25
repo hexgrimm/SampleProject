@@ -1,3 +1,4 @@
+using Common;
 using UnityEngine;
 
 namespace Models.Assets
@@ -5,6 +6,6 @@ namespace Models.Assets
 	public interface IAssetsModel: IUpdateable
 	{
 		AssetsConfiguration Links { get; }
-		GameObject LoadAsset(ResourceId resourceId);
+		IPromise<GameObject> LoadAsset(ResourceId resourceId);
 	}
 }
