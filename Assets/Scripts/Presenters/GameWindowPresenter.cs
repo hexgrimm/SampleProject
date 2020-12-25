@@ -36,9 +36,9 @@ namespace Presenters
 			for (int i = 0; i < _applicationModel.Layers.Count; i++)
 			{
 				var item = _applicationModel.Layers[i];
-				if (item == (int) ResourceId.GameWindow)
+				if (item.viewId == ResourceId.GameWindow)
 				{
-					//_gameWindow.ShowOnLayer(i);
+					_gameWindow.ShowOnLayer(i, item.prefab);
 					return;
 				}
 			}

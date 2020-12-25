@@ -12,19 +12,18 @@ namespace Views
 			
 		}
 
-		public void EnableSpinnerRotation()
-		{
-			if (_sequence == null)
-			{
-				_sequence = DOTween.Sequence()
-					.Append(PrefabLink.Spinner.transform.DORotate(new Vector3(0, 0, 90), 1, RotateMode.FastBeyond360))
-					.SetLoops(-1);
-			}
-		}
-
 		protected override void ShowInternal()
 		{
-			
+			if (_sequence != null)
+			{
+				Debug.LogError("HZ");
+			}
+			else
+			{
+				_sequence = DOTween.Sequence()
+					.Append(PrefabLink.Spinner.transform.DORotate(new Vector3(0, 0, 180), 1))
+					.SetLoops(-1);
+			}
 		}
 
 		protected override void HideInternal()
@@ -33,6 +32,7 @@ namespace Views
 			{
 				_sequence.Rewind();
 				_sequence.Kill();
+				_sequence = null;
 			}
 		}
 	}

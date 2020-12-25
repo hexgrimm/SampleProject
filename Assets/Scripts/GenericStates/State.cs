@@ -12,9 +12,13 @@ namespace GenericStates
             get { return _currentState; }
         }
 
-        protected void BecomeContext()
+        protected void BecomeContext(Action<T> preProcessor)
         {
-            _setExternalState = SetStateAsContext;
+            _setExternalState = (newState) =>
+            {
+                preProcessor(newState);
+                SetStateAsContext(newState);
+            };
         }
 
         protected virtual void SetNewState(T newState)

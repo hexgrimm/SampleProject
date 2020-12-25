@@ -10,7 +10,6 @@ namespace Presenters
 	{
 		private readonly ILoadingWindowView _loadingWindowView;
 		private readonly IApplicationModel _applicationModel;
-		private bool _dataTransferEnabled;
 
 		public LoadingWindowPresenter(ILoadingWindowView loadingWindowView, IApplicationModel applicationModel)
 		{
@@ -29,12 +28,6 @@ namespace Presenters
 			{
 				UpdateViewState();
 			}
-			
-			if (!_dataTransferEnabled)
-				return;
-			
-			
-			_loadingWindowView.EnableSpinnerRotation();
 		}
 
 		private void UpdateViewState()
@@ -42,16 +35,14 @@ namespace Presenters
 			for (int i = 0; i < _applicationModel.Layers.Count; i++)
 			{
 				var item = _applicationModel.Layers[i];
-				if (item == (int) ResourceId.LoadingWindow)
+				if (item.viewId == ResourceId.LoadingWindow)
 				{
-					//_loadingWindowView.ShowOnLayer(i);
-					_dataTransferEnabled = true;
+					_loadingWindowView.ShowOnLayer(i, item.prefab);
 					return;
 				}
 			}
 
 			_loadingWindowView.Hide();
-			_dataTransferEnabled = false;
 		}
 	}
 }

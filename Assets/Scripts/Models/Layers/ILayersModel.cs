@@ -1,15 +1,17 @@
 using System.Collections.Generic;
 using Common;
+using Models.Assets;
+using UnityEngine;
 
 namespace Models.Layers
 {
 	public interface ILayersModel : IUpdateable
 	{
 		IFlag LayersChanged { get; }
-		IReadOnlyList<int> Layers { get; }
+		IReadOnlyList<(ResourceId viewId, GameObject prefab)> Layers { get; }
 		
-		void ShowViewOnTop(int viewId);
-		void HideView(int viewId);
+		void ShowViewOnTop(ResourceId viewId, GameObject prefab);
+		void HideView(ResourceId viewId);
 		void HideAll();
 	}
 }

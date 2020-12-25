@@ -61,7 +61,7 @@ namespace Root
 
 		private void Update()
 		{
-			_rootLoop.Update();
+			_rootLoop?.Update();
 		}
 	}
 }

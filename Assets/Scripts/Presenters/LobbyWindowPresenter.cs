@@ -50,9 +50,9 @@ namespace Presenters
 			for (int i = 0; i < _applicationModel.Layers.Count; i++)
 			{
 				var item = _applicationModel.Layers[i];
-				if (item == (int) ResourceId.LobbyWindow)
+				if (item.viewId == ResourceId.LobbyWindow)
 				{
-					//_lobbyView.ShowOnLayer(i);
+					_lobbyView.ShowOnLayer(i, item.prefab);
 					_dataTransferEnabled = true;
 					return;
 				}

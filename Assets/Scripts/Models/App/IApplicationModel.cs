@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using Common;
+using Models.Assets;
+using UnityEngine;
 
 namespace Models.App
 {
@@ -16,7 +18,7 @@ namespace Models.App
 		int Crystals { get; }
 		float DeltaTime { get; }
 		
-		IReadOnlyList<int> Layers { get; }
+		IReadOnlyList<(ResourceId viewId, GameObject prefab)> Layers { get; }
 		IFlag LayersChanged { get; }
 		IFlag<bool> GameRunning { get; }
 	}

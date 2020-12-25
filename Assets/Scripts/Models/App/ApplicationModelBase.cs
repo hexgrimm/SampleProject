@@ -6,6 +6,7 @@ using Models.Layers;
 using Models.Meta;
 using Models.Simulation;
 using Models.Times;
+using UnityEngine;
 
 namespace Models.App
 {
@@ -16,7 +17,7 @@ namespace Models.App
 		public virtual int Coins => Data.MetaModel.Coins;
 		public virtual int Crystals => Data.MetaModel.Crystals;
 		public virtual float DeltaTime => Data.TimeModel.DeltaTime;
-		public virtual IReadOnlyList<int> Layers => Data.LayersModel.Layers;
+		public virtual IReadOnlyList<(ResourceId viewId, GameObject prefab)> Layers => Data.LayersModel.Layers;
 		public virtual IFlag LayersChanged => Data.LayersModel.LayersChanged;
 		public virtual IFlag<bool> GameRunning => Data.GameRunning;
 

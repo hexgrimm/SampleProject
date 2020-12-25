@@ -6,6 +6,7 @@ namespace Models.Assets
 	public interface IAssetsModel: IUpdateable
 	{
 		AssetsConfiguration Links { get; }
-		IPromise<GameObject> LoadAsset(ResourceId resourceId);
+		GameObject LoadAsset(ResourceId resourceId);
+		IPromise<GameObject> LoadAssetAsync(ResourceId resourceId);
 	}
 }
