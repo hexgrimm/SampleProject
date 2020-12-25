@@ -7,7 +7,7 @@ namespace Views
 	{
 		private Sequence _sequence;
 		
-		public LoadingView(GameObject prefab, Transform parent) : base(prefab, parent)
+		public LoadingView(Transform parent) : base(parent)
 		{
 			
 		}

@@ -1,5 +1,6 @@
 using Models;
 using Models.App;
+using Models.Assets;
 using Presenters.CoreLoop;
 using Views;
 
@@ -35,9 +36,9 @@ namespace Presenters
 			for (int i = 0; i < _applicationModel.Layers.Count; i++)
 			{
 				var item = _applicationModel.Layers[i];
-				if (item == (int) ResourcesConfiguration.ResourceId.GameWindow)
+				if (item == (int) ResourceId.GameWindow)
 				{
-					_gameWindow.ShowOnLayer(i);
+					//_gameWindow.ShowOnLayer(i);
 					return;
 				}
 			}

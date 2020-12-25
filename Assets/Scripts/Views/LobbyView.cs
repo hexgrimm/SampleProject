@@ -1,5 +1,5 @@
+using Common;
 using UnityEngine;
-using Utils;
 
 namespace Views
 {
@@ -12,7 +12,7 @@ namespace Views
 
 		public IFlag StartGameButton => _startGameButton;
 
-		public LobbyView(GameObject prefab, Transform parent) : base(prefab, parent)
+		public LobbyView(Transform parent) : base(parent)
 		{
 			
 		}

@@ -1,5 +1,6 @@
 using Models;
 using Models.App;
+using Models.Assets;
 using Presenters.CoreLoop;
 using Views;
 
@@ -41,9 +42,9 @@ namespace Presenters
 			for (int i = 0; i < _applicationModel.Layers.Count; i++)
 			{
 				var item = _applicationModel.Layers[i];
-				if (item == (int) ResourcesConfiguration.ResourceId.LoadingWindow)
+				if (item == (int) ResourceId.LoadingWindow)
 				{
-					_loadingWindowView.ShowOnLayer(i);
+					//_loadingWindowView.ShowOnLayer(i);
 					_dataTransferEnabled = true;
 					return;
 				}

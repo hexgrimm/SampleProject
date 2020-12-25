@@ -25,10 +25,12 @@ namespace Tests.Simulation
 		{
 			//yield return new EnterPlayMode();
 
-			_simModel = new SimulationModel(_physicsSceneSym, new AssetsModel(new AssetsConfiguration(), new UpdateWatcher("test")));
+			var am = new AssetsModel(ScriptableObject.CreateInstance<AssetsConfiguration>(), new UpdateWatcher("test"));
+			_simModel = new SimulationModel(_physicsSceneSym, am);
 			yield return new WaitForEndOfFrame();
 			
-			_simModel.InstantiatePrefab();
+			_simModel.InstantiatePrefab(am.LoadAsset(ResourceId.SimulationPrefab));
+			
 			for (int i = 0; i < 4; i++)
 			{
 				_simModel.Update(0.02f);

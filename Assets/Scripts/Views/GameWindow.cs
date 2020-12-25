@@ -1,5 +1,5 @@
+using Common;
 using UnityEngine;
-using Utils;
 
 namespace Views
 {
@@ -9,7 +9,7 @@ namespace Views
 		
 		public IFlag QuitGameButton => _quitGameButton;
 		
-		public GameWindow(GameObject prefab, Transform parent) : base(prefab, parent)
+		public GameWindow(Transform parent) : base(parent)
 		{
 			
 		}

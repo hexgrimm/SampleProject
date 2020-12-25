@@ -1,11 +1,10 @@
 using System.Collections.Generic;
+using Common;
 using Models.Assets;
 using Models.Layers;
 using Models.Meta;
 using Models.Simulation;
 using Models.Times;
-using Utils;
-using static Models.ResourcesConfiguration;
 
 namespace Models.App
 {
@@ -20,7 +19,6 @@ namespace Models.App
 		private readonly IUpdateWatcher _updateWatcher;
 
 		private bool _isInitialized = false;
-		private bool _discPopupShown;
 		
 		private ApplicationViewStates _currentState;
 		
@@ -104,22 +102,10 @@ namespace Models.App
 		private void LobbyUpdate()
 		{
 			_metaModel.Update();
-			
-			if (!_metaModel.IsConnected && !_discPopupShown)
-			{
-				_discPopupShown = true;
-				_layersModel.ShowViewOnTop((int) ResourceId.DisconnectedPopUp);
-			}
-
-			if (_metaModel.IsConnected && _discPopupShown)
-			{
-				_discPopupShown = false;
-				_layersModel.HideView((int) ResourceId.DisconnectedPopUp);
-			}
 
 			if (_requestMoreCoins.Get)
 			{
-				if (_metaModel.IsConnected && !_discPopupShown)
+				if (_metaModel.IsConnected)
 				{
 					_metaModel.RequestMoreCoins();
 				}
@@ -160,7 +146,7 @@ namespace Models.App
 			
 			_gameRunning.Raise(true);
 			
-			_simulationModel.InstantiatePrefab();
+			//_simulationModel.InstantiatePrefab();
 			_simulationModel.Show(_timeModel.RealTimeSinceStartup);
 		}
 
@@ -177,6 +163,7 @@ namespace Models.App
 
 		private void Init()
 		{
+			var asset = _assetsModel.LoadAsset(ResourceId.LoadingWindow);
 			_layersModel.HideAll();
 			_layersModel.ShowViewOnTop((int) ResourceId.LoadingWindow);
 		}

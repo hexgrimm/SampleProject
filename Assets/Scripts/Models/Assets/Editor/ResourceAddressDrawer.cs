@@ -37,7 +37,7 @@ namespace Models.Assets.Editor
             var pathProp = property.FindPropertyRelative("PathInAssets");
             var path = pathProp.stringValue;
             
-            var idProp = property.FindPropertyRelative("Id");
+            var idProp = property.FindPropertyRelative("FileName");
             var id = idProp.stringValue;
 
             toDraw = AssetDatabase.LoadAssetAtPath<GameObject>(path);

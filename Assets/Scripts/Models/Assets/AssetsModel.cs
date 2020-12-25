@@ -1,4 +1,5 @@
 
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 #if UNITY_EDITOR
@@ -17,10 +18,10 @@ namespace Models.Assets
 			Links = assetsConfiguration;
 		}
 
-		public GameObject LoadAsset(string id)
+		public GameObject LoadAsset(ResourceId resourceId)
 		{
 			#if UNITY_EDITOR
-			return AssetDatabase.LoadAssetAtPath<GameObject>(Links.SimulationPrefabLink.PathInAssets);
+			return AssetDatabase.LoadAssetAtPath<GameObject>(Links.Resources.First(x=>x.ResourceId == resourceId).ResourceLink.PathInAssets);
 			#endif
 		}
 

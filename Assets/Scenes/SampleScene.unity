@@ -536,5 +536,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ea448624fd84f52bdda56976382441a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AssetLinks: {fileID: 11400000, guid: e6b966af9040deb458bb7999194dc544, type: 2}
+  AssetsConfiguration: {fileID: 11400000, guid: e6b966af9040deb458bb7999194dc544,
+    type: 2}
   UiRoot: {fileID: 130524527}

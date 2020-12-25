@@ -1,5 +1,6 @@
 using System;
-using Utils;
+using Common;
+using UnityEngine;
 
 namespace Views
 {
@@ -8,7 +9,7 @@ namespace Views
 		IFlag RequestCoinsButton { get; }
 		IFlag StartGameButton { get; }
 		
-		void ShowOnLayer(int layerIndex);
+		void ShowOnLayer(int layerIndex, GameObject prefab);
 		void Hide();
 		void SetCoinsValue(int value);
 		void SetDeltaTimeValue(float value);

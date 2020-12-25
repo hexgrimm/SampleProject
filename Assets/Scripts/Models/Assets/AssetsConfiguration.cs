@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Models.Assets
@@ -13,14 +12,16 @@ namespace Models.Assets
 	[Serializable]
 	public class ResourceLink
 	{
+		public GameObject DirectLink;
 		public string PathInAssets;
-		public string Id;
+		public string FileName;
 	}
 
 	[Serializable]
 	public class ResourceIdLinkPair
 	{
-		public ResourcesConfiguration.ResourceId Id;
+		public ResourceType ResourceType;
+		public ResourceId ResourceId;
 		public ResourceLink ResourceLink;
 	}
 }

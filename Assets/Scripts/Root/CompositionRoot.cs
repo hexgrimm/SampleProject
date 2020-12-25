@@ -46,9 +46,9 @@ namespace Root
 			var presenters = new List<IUpdateablePresenter>();
 			
 			//views
-			var lobbyView = new LobbyView(AssetsConfiguration.LobbyWindowPrefab, UiRoot);
-			var loadingWindowView = new LoadingView(AssetsConfiguration.LoadingWindowPrefab, UiRoot);
-			var gameWindowView = new GameWindow(AssetsConfiguration.GameWindowPrefab, UiRoot);
+			var lobbyView = new LobbyView(UiRoot);
+			var loadingWindowView = new LoadingView(UiRoot);
+			var gameWindowView = new GameWindow(UiRoot);
 			
 			//presenters
 			presenters.Add(new LoadingWindowPresenter(loadingWindowView, applicationModel));
