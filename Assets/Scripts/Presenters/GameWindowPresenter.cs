@@ -1,5 +1,7 @@
 using Models;
 using Models.App;
+using Models.Assets;
+using Models.Layers;
 using Presenters.CoreLoop;
 using Views;
 
@@ -9,11 +11,13 @@ namespace Presenters
 	{
 		private readonly IApplicationModel _applicationModel;
 		private readonly IGameWindow _gameWindow;
+		private readonly WindowSubPresenter _windowSubPresenter;
 
 		public GameWindowPresenter(IGameWindow gameWindow, IApplicationModel applicationModel)
 		{
 			_applicationModel = applicationModel;
 			_gameWindow = gameWindow;
+			_windowSubPresenter = new WindowSubPresenter(applicationModel, ResourceId.GameWindow, _gameWindow);
 		}
 		
 		public void PreModelUpdate()
@@ -24,25 +28,7 @@ namespace Presenters
 
 		public void PostModelUpdate()
 		{
-			if (_applicationModel.LayersChanged.Get)
-			{
-				UpdateViewState();
-			}
-		}
-
-		private void UpdateViewState()
-		{
-			for (int i = 0; i < _applicationModel.Layers.Count; i++)
-			{
-				var item = _applicationModel.Layers[i];
-				if (item == (int) ResourcesConfiguration.ViewResourceId.GameViewWindowId)
-				{
-					_gameWindow.ShowOnLayer(i);
-					return;
-				}
-			}
-
-			_gameWindow.Hide();
+			_windowSubPresenter.SyncWindowState();
 		}
 	}
 }

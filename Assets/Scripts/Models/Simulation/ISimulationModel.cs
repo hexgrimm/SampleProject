@@ -1,11 +1,13 @@
+using UnityEngine;
+
 namespace Models.Simulation
 {
 	public interface ISimulationModel
 	{
-		void InstantiatePrefab();
+		void InstantiatePrefab(GameObject prefab);
 		void Show(float startTime);
 		void Hide();
-		void DestroyInstanceForUnload();
+		void DestroyInstance();
 		void Update(float toTime);
 	}
 }

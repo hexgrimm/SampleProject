@@ -1,9 +1,9 @@
+using Common;
 using UnityEngine;
-using Utils;
 
 namespace Views
 {
-	public class LobbyView : ViewBase<LobbyWindowPrefabLinks>, ILobbyView
+	public class LobbyWindow : ViewBase<LobbyWindowPrefabLinks>, ILobbyWindow
 	{
 		private readonly Flag _requestCoinsButton = new Flag();
 		private readonly Flag _startGameButton = new Flag();
@@ -12,7 +12,7 @@ namespace Views
 
 		public IFlag StartGameButton => _startGameButton;
 
-		public LobbyView(GameObject prefab, Transform parent) : base(prefab, parent)
+		public LobbyWindow(Transform parent) : base(parent)
 		{
 			
 		}

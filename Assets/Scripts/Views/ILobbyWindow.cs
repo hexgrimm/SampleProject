@@ -1,15 +1,14 @@
 using System;
-using Utils;
+using Common;
+using UnityEngine;
 
 namespace Views
 {
-	public interface ILobbyView
+	public interface ILobbyWindow : IWindow
 	{
 		IFlag RequestCoinsButton { get; }
 		IFlag StartGameButton { get; }
 		
-		void ShowOnLayer(int layerIndex);
-		void Hide();
 		void SetCoinsValue(int value);
 		void SetDeltaTimeValue(float value);
 	}

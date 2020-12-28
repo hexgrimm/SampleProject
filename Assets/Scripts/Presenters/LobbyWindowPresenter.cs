@@ -1,5 +1,5 @@
-using Models;
 using Models.App;
+using Models.Assets;
 using Presenters.CoreLoop;
 using Views;
 
@@ -7,24 +7,24 @@ namespace Presenters
 {
 	public class LobbyWindowPresenter : IUpdateablePresenter
 	{
-		private readonly ILobbyView _lobbyView;
+		private readonly ILobbyWindow _lobbyWindow;
 		private readonly IApplicationModel _applicationModel;
+		private readonly WindowSubPresenter _windowSubPresenter;
 
-		private bool _dataTransferEnabled;
-
-		public LobbyWindowPresenter(ILobbyView lobbyView, IApplicationModel applicationModel)
+		public LobbyWindowPresenter(ILobbyWindow lobbyWindow, IApplicationModel applicationModel)
 		{
-			_lobbyView = lobbyView;
+			_lobbyWindow = lobbyWindow;
 			_applicationModel = applicationModel;
+			_windowSubPresenter = new WindowSubPresenter(applicationModel, ResourceId.LobbyWindow, _lobbyWindow);
 		}
 
 		public void PreModelUpdate()
 		{
-			if (_lobbyView.RequestCoinsButton.Get)
+			if (_lobbyWindow.RequestCoinsButton.Get)
 			{
-				_applicationModel.RequestMoreCoins.Raise();
+				_applicationModel.RequestMoreCoins();
 			}
-			else if (_lobbyView.StartGameButton.Get)
+			else if (_lobbyWindow.StartGameButton.Get)
 			{
 				_applicationModel.StartNewGame();
 			}
@@ -32,33 +32,14 @@ namespace Presenters
 
 		public void PostModelUpdate()
 		{
-			if (_applicationModel.LayersChanged.Get)
-			{
-				UpdateViewState();
-			}
+			_windowSubPresenter.SyncWindowState();
 			
-			if (!_dataTransferEnabled)
+			if (!_windowSubPresenter.WindowHasShown)
 				return;
 			
-			_lobbyView.SetDeltaTimeValue(_applicationModel.DeltaTime);
-			_lobbyView.SetCoinsValue(_applicationModel.Coins);
+			_lobbyWindow.SetDeltaTimeValue(_applicationModel.DeltaTime);
+			_lobbyWindow.SetCoinsValue(_applicationModel.Coins);
 		}
-
-		private void UpdateViewState()
-		{
-			for (int i = 0; i < _applicationModel.Layers.Count; i++)
-			{
-				var item = _applicationModel.Layers[i];
-				if (item == (int) ResourcesConfiguration.ViewResourceId.LobbyViewWindowId)
-				{
-					_lobbyView.ShowOnLayer(i);
-					_dataTransferEnabled = true;
-					return;
-				}
-			}
-
-			_lobbyView.Hide();
-			_dataTransferEnabled = false;
-		}
+		
 	}
 }

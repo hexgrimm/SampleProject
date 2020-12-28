@@ -1,11 +1,9 @@
-using Utils;
+using Common;
 
 namespace Views
 {
-	public interface IGameWindow
+	public interface IGameWindow : IWindow
 	{
 		IFlag QuitGameButton { get; }
-		void ShowOnLayer(int layerIndex);
-		void Hide();
 	}
 }

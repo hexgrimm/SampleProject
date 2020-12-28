@@ -1,5 +1,6 @@
 using Models;
 using Models.App;
+using Models.Assets;
 using Presenters.CoreLoop;
 using Views;
 
@@ -7,14 +8,15 @@ namespace Presenters
 {
 	public class LoadingWindowPresenter : IUpdateablePresenter
 	{
-		private readonly ILoadingWindowView _loadingWindowView;
+		private readonly ILoadingWindow _loadingWindow;
 		private readonly IApplicationModel _applicationModel;
-		private bool _dataTransferEnabled;
+		private readonly WindowSubPresenter _windowSubPresenter;
 
-		public LoadingWindowPresenter(ILoadingWindowView loadingWindowView, IApplicationModel applicationModel)
+		public LoadingWindowPresenter(ILoadingWindow loadingWindow, IApplicationModel applicationModel)
 		{
-			_loadingWindowView = loadingWindowView;
+			_loadingWindow = loadingWindow;
 			_applicationModel = applicationModel;
+			_windowSubPresenter = new WindowSubPresenter(applicationModel, ResourceId.LoadingWindow, _loadingWindow);
 		}
 		
 		public void PreModelUpdate()
@@ -24,33 +26,8 @@ namespace Presenters
 
 		public void PostModelUpdate()
 		{
-			if (_applicationModel.LayersChanged.Get)
-			{
-				UpdateViewState();
-			}
-			
-			if (!_dataTransferEnabled)
-				return;
-			
-			
-			_loadingWindowView.EnableSpinnerRotation();
+			_windowSubPresenter.SyncWindowState();
 		}
 
-		private void UpdateViewState()
-		{
-			for (int i = 0; i < _applicationModel.Layers.Count; i++)
-			{
-				var item = _applicationModel.Layers[i];
-				if (item == (int) ResourcesConfiguration.ViewResourceId.LoadingViewWindowId)
-				{
-					_loadingWindowView.ShowOnLayer(i);
-					_dataTransferEnabled = true;
-					return;
-				}
-			}
-
-			_loadingWindowView.Hide();
-			_dataTransferEnabled = false;
-		}
 	}
 }

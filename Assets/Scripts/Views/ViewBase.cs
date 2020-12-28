@@ -4,22 +4,20 @@ namespace Views
 {
 	public abstract class ViewBase<T> where T : MonoBehaviour
 	{
-		private readonly GameObject _prefab;
 		private readonly Transform _parent;
 		protected GameObject GameObjectInstance;
 		protected T PrefabLink;
 
-		public ViewBase(GameObject prefab, Transform parent)
+		public ViewBase(Transform parent)
 		{
-			_prefab = prefab;
 			_parent = parent;
 		}
 
-		public void ShowOnLayer(int layerIndex)
+		public void ShowOnLayer(int layerIndex, GameObject prefab)
 		{
 			if (GameObjectInstance == null)
 			{
-				GameObjectInstance = Object.Instantiate(_prefab, _parent);
+				GameObjectInstance = Object.Instantiate(prefab, _parent);
 				PrefabLink = GameObjectInstance.GetComponent<T>();
 			}
 

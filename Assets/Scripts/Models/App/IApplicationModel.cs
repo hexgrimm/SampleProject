@@ -1,13 +1,15 @@
 using System.Collections.Generic;
-using Utils;
+using Common;
+using Models.Assets;
+using UnityEngine;
 
 namespace Models.App
 {
-	public interface IApplicationModel
+	public interface IApplicationModel : IUpdateable
 	{
 		//Before Update
-		IFlagHandle RequestMoreCoins { get; }
-		IFlagHandle<int> ExchangeCoinsToCrystals { get; }
+		void RequestMoreCoins();
+		void ExchangeCoinsToCrystals(int amount);
 		void StartNewGame();
 		void QuitGame();
 
@@ -16,7 +18,7 @@ namespace Models.App
 		int Crystals { get; }
 		float DeltaTime { get; }
 		
-		IReadOnlyList<int> Layers { get; }
+		IReadOnlyList<(ResourceId viewId, GameObject prefab)> Layers { get; }
 		IFlag LayersChanged { get; }
 		IFlag<bool> GameRunning { get; }
 	}
