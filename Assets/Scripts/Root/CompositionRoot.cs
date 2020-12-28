@@ -46,8 +46,8 @@ namespace Root
 			var presenters = new List<IUpdateablePresenter>();
 			
 			//views
-			var lobbyView = new LobbyView(UiRoot);
-			var loadingWindowView = new LoadingView(UiRoot);
+			var lobbyView = new LobbyWindow(UiRoot);
+			var loadingWindowView = new Loading(UiRoot);
 			var gameWindowView = new GameWindow(UiRoot);
 			
 			//presenters

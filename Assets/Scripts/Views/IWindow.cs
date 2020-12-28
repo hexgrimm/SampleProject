@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Views
 {
-	public interface ILoadingWindowView
+	public interface IWindow
 	{
 		void ShowOnLayer(int layerIndex, GameObject prefab);
 		void Hide();

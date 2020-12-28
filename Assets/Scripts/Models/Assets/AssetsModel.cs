@@ -62,7 +62,7 @@ namespace Models.Assets
 			//emulation of asset bundle async load
 			Task.Run(async () =>
 			{
-				await Task.Delay(3500);
+				await Task.Delay(1500);
 				p.SetComplete(prefab);
 			});
 			return p;

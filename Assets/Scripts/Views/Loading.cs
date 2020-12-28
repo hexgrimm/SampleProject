@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace Views
 {
-	public class LoadingView : ViewBase<LoadingWindowPrefabLinks>, ILoadingWindowView
+	public class Loading : ViewBase<LoadingWindowPrefabLinks>, ILoadingWindow
 	{
 		private Sequence _sequence;
 		
-		public LoadingView(Transform parent) : base(parent)
+		public Loading(Transform parent) : base(parent)
 		{
 			
 		}

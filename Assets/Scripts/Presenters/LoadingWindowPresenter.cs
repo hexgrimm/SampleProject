@@ -8,13 +8,15 @@ namespace Presenters
 {
 	public class LoadingWindowPresenter : IUpdateablePresenter
 	{
-		private readonly ILoadingWindowView _loadingWindowView;
+		private readonly ILoadingWindow _loadingWindow;
 		private readonly IApplicationModel _applicationModel;
+		private readonly WindowSubPresenter _windowSubPresenter;
 
-		public LoadingWindowPresenter(ILoadingWindowView loadingWindowView, IApplicationModel applicationModel)
+		public LoadingWindowPresenter(ILoadingWindow loadingWindow, IApplicationModel applicationModel)
 		{
-			_loadingWindowView = loadingWindowView;
+			_loadingWindow = loadingWindow;
 			_applicationModel = applicationModel;
+			_windowSubPresenter = new WindowSubPresenter(applicationModel, ResourceId.LoadingWindow, _loadingWindow);
 		}
 		
 		public void PreModelUpdate()
@@ -24,25 +26,8 @@ namespace Presenters
 
 		public void PostModelUpdate()
 		{
-			if (_applicationModel.LayersChanged.Get)
-			{
-				UpdateViewState();
-			}
+			_windowSubPresenter.SyncWindowState();
 		}
 
-		private void UpdateViewState()
-		{
-			for (int i = 0; i < _applicationModel.Layers.Count; i++)
-			{
-				var item = _applicationModel.Layers[i];
-				if (item.viewId == ResourceId.LoadingWindow)
-				{
-					_loadingWindowView.ShowOnLayer(i, item.prefab);
-					return;
-				}
-			}
-
-			_loadingWindowView.Hide();
-		}
 	}
 }

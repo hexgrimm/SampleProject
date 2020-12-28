@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Views
 {
-	public class LobbyView : ViewBase<LobbyWindowPrefabLinks>, ILobbyView
+	public class LobbyWindow : ViewBase<LobbyWindowPrefabLinks>, ILobbyWindow
 	{
 		private readonly Flag _requestCoinsButton = new Flag();
 		private readonly Flag _startGameButton = new Flag();
@@ -12,7 +12,7 @@ namespace Views
 
 		public IFlag StartGameButton => _startGameButton;
 
-		public LobbyView(Transform parent) : base(parent)
+		public LobbyWindow(Transform parent) : base(parent)
 		{
 			
 		}

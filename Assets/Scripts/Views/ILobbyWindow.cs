@@ -4,13 +4,11 @@ using UnityEngine;
 
 namespace Views
 {
-	public interface ILobbyView
+	public interface ILobbyWindow : IWindow
 	{
 		IFlag RequestCoinsButton { get; }
 		IFlag StartGameButton { get; }
 		
-		void ShowOnLayer(int layerIndex, GameObject prefab);
-		void Hide();
 		void SetCoinsValue(int value);
 		void SetDeltaTimeValue(float value);
 	}
